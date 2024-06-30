@@ -9,11 +9,7 @@ Route::get('/', function () {
 });
 
 
-// Admin Route
-// Route::get('admin', function(){
-//     return view('admin.auth.login');
-// });
-
+// ==================== Admin Route ======================= //
 Route::controller(AdminController::class)->prefix('admin')->group(function(){
     Route::get('login', 'login')->name('admin.login.get');
     Route::post('login', 'AdminLogin')->name('login.post');
