@@ -16,9 +16,8 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $admin = Auth::guard('admin')->user();
-    
-        if (!$admin || $admin->id) {
+        if(!session()->has('id'))
+        {
             session()->flash('error', 'Opps! You do not have permission to access.');
             return redirect()->route('admin.login.get');
         }

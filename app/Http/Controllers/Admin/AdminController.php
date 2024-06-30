@@ -71,4 +71,16 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    public function logout(Request $request)
+    {
+        if(Auth::guard('admin')->check())
+        {
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+
+            session()->flash('success', 'You Have Successfully Logout.');
+            return redirect()->route('admin.login.get');
+        }
+    }
 }
