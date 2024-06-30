@@ -18,7 +18,7 @@ Route::controller(AdminController::class)->prefix('admin')->group(function(){
     Route::post('register', 'AdminRegister')->name('admin.register.post');
 
     Route::middleware(['IsAdmin'])->group(function(){
-        Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+        Route::get('dashboard', 'dashboard')->name('dashboard');
     });
 });
 

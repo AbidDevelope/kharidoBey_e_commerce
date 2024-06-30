@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,8 @@ class AdminController extends Controller
         return view('admin.auth.register');
     }
 
-    public function AdminRegister(AdminRegisterRequest $request){
+    public function AdminRegister(AdminRegisterRequest $request)
+    {
         // dd($request->all());
         $admin = Admin::create([
             'name' => $request->name,
@@ -41,17 +43,26 @@ class AdminController extends Controller
             "password" => 'required'
         ]);
 
-        if($validate->fails())
-        {
+        if ($validate->fails()) {
             return redirect()->back()->withErrors($validate)->withInput();
-        }else {
+        } else {
             $admin = Admin::where('email', $request->email)->first();
-            // dd($admin);
+
             if (!$admin) {
                 session()->flash('error', 'Email is not registered!');
                 return redirect()->back()->withInput();
-            }else {
-                return "Welcome to Dashboard";
+            } else {
+                $credentials = $request->only('email', 'password');
+
+                if (Auth::guard('admin')->attempt($credentials)) {
+                    $adminId = Auth::guard('admin')->user()->id;
+                    // dd($adminId);
+                    $request->session()->put('id', $adminId);
+                    return redirect()->route('dashboard');
+                } else {
+                    session()->flash('error', 'Credentials do not match.');
+                    return redirect()->back();
+                }
             }
         }
     }

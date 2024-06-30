@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class IsAdmin
 {
@@ -15,7 +16,9 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!session()->has('id')) {
+        $admin = Auth::guard('admin')->user();
+    
+        if (!$admin || $admin->id) {
             session()->flash('error', 'Opps! You do not have permission to access.');
             return redirect()->route('admin.login.get');
         }
