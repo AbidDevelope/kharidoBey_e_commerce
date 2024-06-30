@@ -16,10 +16,13 @@ Route::get('/', function () {
 
 Route::controller(AdminController::class)->prefix('admin')->group(function(){
     Route::get('login', 'login')->name('admin.login.get');
+    Route::post('login', 'AdminLogin')->name('login.post');
 
     Route::get('register', 'Register')->name('admin.register.get');
     Route::post('register', 'AdminRegister')->name('admin.register.post');
 
-    Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+    Route::middleware(['IsAdmin'])->group(function(){
+        Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+    });
 });
 
