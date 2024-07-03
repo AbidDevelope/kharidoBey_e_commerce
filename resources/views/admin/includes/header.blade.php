@@ -68,7 +68,7 @@
         </li>
         <li class="dropdown">
             <a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
-                <span class="user-name d-none d-md-block">Abigale Heaney</span>
+                <span class="user-name d-none d-md-block">{{ Auth::guard('admin')->user()->name }}</span>
                 <span class="avatar">
                     <img src="{{ asset('assets/admin/images/user.png') }}" alt="Admin Templates">
                     <span class="status online"></span>
@@ -76,7 +76,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                 <div class="header-profile-actions">
-                    <a href="profile.html">Profile</a>
+                    <a href="{{ route('admin.profile') }}">Profile</a>
                     <a href="account-settings.html">Settings</a>
                     <a href="{{ route('admin.logout') }}">Logout</a>
                 </div>

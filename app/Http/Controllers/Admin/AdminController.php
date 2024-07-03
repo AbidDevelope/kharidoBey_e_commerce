@@ -72,6 +72,11 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+    public function profile()
+    {
+        return view('admin.profile.profile');
+    }
+
     public function logout(Request $request)
     {
         if(Auth::guard('admin')->check())

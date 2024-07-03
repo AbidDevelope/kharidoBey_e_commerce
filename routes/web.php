@@ -19,6 +19,7 @@ Route::controller(AdminController::class)->prefix('admin')->group(function(){
 
     Route::middleware(['IsAdmin'])->group(function(){
         Route::get('dashboard', 'dashboard')->name('dashboard');
+        Route::get('profile', 'profile')->name('admin.profile');
         Route::get('logout', 'logout')->name('admin.logout');
     });
 });
