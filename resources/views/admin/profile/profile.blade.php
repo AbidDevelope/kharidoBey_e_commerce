@@ -28,7 +28,7 @@
                                             <span class="icon">
                                                 <i class="bi bi-pin-angle"></i>
                                             </span>
-                                            <h6>Location - <span>Canada</span></h6>
+                                            <h6>Location - <span>Allahabad</span></h6>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-12">
