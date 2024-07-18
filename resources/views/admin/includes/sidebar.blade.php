@@ -3,7 +3,7 @@
 
     <!-- Sidebar brand starts -->
     <div class="sidebar-brand">
-        <a href="#" class="logo">
+        <a href="{{ route('dashboard') }}" class="logo">
             <img src="{{ asset('assets/admin/images/icon/kharidoBey.png') }}" alt="Melon Admin Dashboard" />
         </a>
     </div>
@@ -14,7 +14,7 @@
         <div class="sidebarMenuScroll">
             <ul>
                 <li class=" active">
-                    <a href="#" class="current-page">
+                    <a href="{{ route('dashboard') }}" class="current-page">
                         <i class="bi bi-house"></i>
                         <span class="menu-text">Dashboards</span>
                     </a>
@@ -27,25 +27,10 @@
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="#">Order History</a>
-                            </li>
-                            <li>
-                                <a href="#">Products</a>
-                            </li>
-                            <li>
-                                <a href="#">Shopping Cart</a>
-                            </li>
-                            <li>
-                                <a href="#">Billing Details</a>
-                            </li>
-                            <li>
-                                <a href="#">Customers</a>
+                                <a href="{{ route('admin.product') }}">Products</a>
                             </li>
                             <li>
                                 <a href="#">Add Product</a>
-                            </li>
-                            <li>
-                                <a href="#">Reviews</a>
                             </li>
                         </ul>
                     </div>

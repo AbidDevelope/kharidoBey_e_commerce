@@ -77,6 +77,17 @@ class AdminController extends Controller
         return view('admin.profile.profile');
     }
 
+    public function showChangePasswordForm() {
+        return view('admin.auth.changePassword');
+    }
+
+    public function changePassword(Request $request) 
+    {
+        $request->validate([
+
+        ]);
+    }
+
     public function logout(Request $request)
     {
         if(Auth::guard('admin')->check())
