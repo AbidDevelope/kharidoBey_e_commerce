@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('content')
-     <!-- Content wrapper scroll start -->
-     <div class="content-wrapper-scroll">
+      <!-- Content wrapper scroll start -->
+      <div class="content-wrapper-scroll">
 
         <!-- Content wrapper start -->
         <div class="content-wrapper">
@@ -59,30 +59,47 @@
                     <div class="row gutters">
         
                         <div class="col-sm-12 col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Profile Details</div>
-                                    <span class="icon">
-                                        <a href="#"><i class="bi bi-pencil-square"></i></a>
-                                    </span>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="customer-rating">
-                                        <li class="clearfix">
-                                            <div class="customer">
-                                                <img src="{{ asset('assets/admin/images/user2.png') }}" alt="Vivo Admin">
-                                            </div>
-                                            <div class="customer-review">
-                                                <div class="stars" id="rate2"></div>
-                                                <h6 class="by">Name : <a >{{ Auth::guard('admin')->user()->name }}</a></h6>
-                                                <h6 class="by">Email : <a >{{ Auth::guard('admin')->user()->email }}</a></h6>
-                                                <h6 class="by">Contact : <a >{{ Auth::guard('admin')->user()->mobile }}</a></h6>
-                                                <h6 class="by">Type : <a >Admin</a></h6>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <!-- Card start -->
+								<div class="card">
+									<div class="card-header">
+										<div class="card-title">Change Password</div>
+									</div>
+									<div class="card-body">
+
+										<!-- Row start -->
+										<form action="{{ route('admin.change.password') }}" method="POST">
+                                            @csrf
+											<div class="row mb-4">
+												<label class="col-sm-4 col-form-label">Old Password</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" name="old_password">
+												</div>
+											</div>
+											<div class="row mb-4">
+												<label class="col-sm-4 col-form-label">New Password</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" name="new_password">
+												</div>
+											</div>
+                                            <div class="row mb-4">
+												<label class="col-sm-4 col-form-label">Confirm Password</label>
+												<div class="col-sm-6">
+													<input type="password" class="form-control" name="confirm_password">
+												</div>
+											</div>	
+										</form>
+										<!-- Row end -->
+
+										<!-- Form actions footer start -->
+										<div class="form-actions-footer">
+											<a href="{{ route('admin.profile') }}" class="btn btn-light">Cancel</a>
+											<button class="btn btn-success">Submit</button>
+										</div>
+										<!-- Form actions footer end -->
+
+									</div>
+								</div>
+								<!-- Card end -->
                         </div>
                     </div>
                     <!-- Row end -->
