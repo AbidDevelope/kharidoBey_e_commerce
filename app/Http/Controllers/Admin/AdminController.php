@@ -19,14 +19,13 @@ class AdminController extends Controller
 
     public function AdminRegister(AdminRegisterRequest $request)
     {
-        // dd($request->all());
         $admin = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $request->mobile,
             'password'  => Hash::make($request->password),
         ]);
-        session()->flash('success', 'You Have Successfully Register');
+        flash()->success('You Have Successfully Registered.');
         return redirect('admin/login');
     }
 
@@ -37,7 +36,6 @@ class AdminController extends Controller
 
     public function AdminLogin(Request $request)
     {
-        // dd($request->all());
         $validate = Validator::make($request->all(), [
             "email" => 'required|max:255|email',
             "password" => 'required'
@@ -49,18 +47,18 @@ class AdminController extends Controller
             $admin = Admin::where('email', $request->email)->first();
 
             if (!$admin) {
-                session()->flash('error', 'Email is not registered!');
+                flash()->error('Email is not registered!');
                 return redirect()->back()->withInput();
             } else {
                 $credentials = $request->only('email', 'password');
 
                 if (Auth::guard('admin')->attempt($credentials)) {
                     $adminId = Auth::guard('admin')->user()->id;
-                    // dd($adminId);
                     $request->session()->put('id', $adminId);
+                    flash()->success('You have Successfully login.');
                     return redirect()->route('dashboard');
                 } else {
-                    session()->flash('error', 'Credentials do not match.');
+                    flash()->error('Credentials do not match.');
                     return redirect()->back();
                 }
             }
@@ -95,7 +93,7 @@ class AdminController extends Controller
             Auth::guard('admin')->logout();
             $request->session()->invalidate();
 
-            session()->flash('success', 'You Have Successfully Logout.');
+            flash()->success('You Have Successfully Logout.');
             return redirect()->route('admin.login.get');
         }
     }

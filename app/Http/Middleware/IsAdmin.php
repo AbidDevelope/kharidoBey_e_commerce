@@ -18,7 +18,7 @@ class IsAdmin
     {
         if(!session()->has('id'))
         {
-            session()->flash('error', 'Opps! You do not have permission to access.');
+            flash()->error('Opps! You do not have permission to access.');
             return redirect()->route('admin.login.get');
         }
         return $next($request);

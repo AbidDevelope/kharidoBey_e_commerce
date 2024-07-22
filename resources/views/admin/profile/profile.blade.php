@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="profile-avatar-tile">
-                                <img src="{{ asset('assets/admin/images/user.png') }}" class="img-fluid"
+                                <img src="{{ asset('assets/admin/images/user3.png') }}" class="img-fluid"
                                     alt="Bootstrap Gallery" />
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     <ul class="customer-rating">
                                         <li class="clearfix">
                                             <div class="customer">
-                                                <img src="{{ asset('assets/admin/images/user2.png') }}" alt="Vivo Admin">
+                                                <img src="{{ asset('assets/admin/images/user3.png') }}" alt="Vivo Admin">
                                             </div>
                                             <div class="customer-review">
                                                 <div class="stars" id="rate2"></div>

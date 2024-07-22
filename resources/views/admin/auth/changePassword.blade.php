@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="profile-avatar-tile">
-                                <img src="{{ asset('assets/admin/images/user.png') }}" class="img-fluid"
+                                <img src="{{ asset('assets/admin/images/user3.png') }}" class="img-fluid"
                                     alt="Bootstrap Gallery" />
                             </div>
                         </div>
