@@ -77,19 +77,7 @@
     </form>
     <!-- Login box end -->
 
-    <script>
-        setTimeout(function() {
-            var successMessage = document.getElementById('success-message');
-            var errorMessage = document.getElementById('error-message');
-            
-            if (successMessage) {
-                successMessage.style.display = 'none';
-            }
-            if (errorMessage) {
-                errorMessage.style.display = 'none';
-            }
-        }, 3000);
-    </script>
+  
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
@@ -116,16 +104,16 @@
    ************ Required JavaScript Files *************
   ************* -->
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/modernizr.js"></script>
-    <script src="assets/js/moment.js"></script>
+    <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
 
     <!-- *************
    ************ Vendor Js Files *************
   ************* -->
 
     <!-- Main Js Required -->
-    <script src="assets/js/main.js"></script>
+    <script src="{{ asset('assets/admin/js/main.js') }}"></script>
 
 </body>

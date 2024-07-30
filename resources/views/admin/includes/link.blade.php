@@ -27,6 +27,9 @@
 		<!-- Main css -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/css/main.min.css') }}">
 
+		 <!-- Bootstrap CSS -->
+		
+
 
 		<!-- **
 			************ Vendor Css Files *************
@@ -36,6 +39,8 @@
 		<link rel="stylesheet" href="{{ asset('assets/admin/vendor/overlay-scroll/OverlayScrollbars.min.css') }}">
         <!-- tagsCloud Keywords CSS -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/vendor/tagsCloud/tagsCloud.css') }}" />
+
+		
 
     
 </head>

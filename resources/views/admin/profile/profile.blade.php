@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('content')
-     <!-- Content wrapper scroll start -->
-     <div class="content-wrapper-scroll">
+    <!-- Content wrapper scroll start -->
+    <div class="content-wrapper-scroll">
 
         <!-- Content wrapper start -->
         <div class="content-wrapper">
@@ -57,13 +57,18 @@
                 <div class="col-lg-8 col-sm-12 col-12">
                     <!-- Row start -->
                     <div class="row gutters">
-        
+
                         <div class="col-sm-12 col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Profile Details</div>
                                     <span class="icon">
-                                        <a href="#"><i class="bi bi-pencil-square"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
+                                                class="bi bi-pencil-square"></i></a>
+                                        {{-- <button type="button" class="btn btn-info" >
+                                            Static backdrop Modal
+                                        </button> --}}
+
                                     </span>
                                 </div>
                                 <div class="card-body">
@@ -74,15 +79,89 @@
                                             </div>
                                             <div class="customer-review">
                                                 <div class="stars" id="rate2"></div>
-                                                <h6 class="by">Name : <a >{{ Auth::guard('admin')->user()->name }}</a></h6>
-                                                <h6 class="by">Email : <a >{{ Auth::guard('admin')->user()->email }}</a></h6>
-                                                <h6 class="by">Contact : <a >{{ Auth::guard('admin')->user()->mobile }}</a></h6>
-                                                <h6 class="by">Type : <a >Admin</a></h6>
+                                                <h6 class="by">Name : <a>{{ Auth::guard('admin')->user()->name }}</a>
+                                                </h6>
+                                                <h6 class="by">Email : <a>{{ Auth::guard('admin')->user()->email }}</a>
+                                                </h6>
+                                                <h6 class="by">Contact :
+                                                    <a>{{ Auth::guard('admin')->user()->mobile }}</a>
+                                                </h6>
+                                                <h6 class="by">Type : <a>Admin</a></h6>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
+                            <!-- Modal 2 -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Edit Profile</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Row start -->
+                                            <form action="" id="editProfileForm">
+                                                <div class="row">
+                                                    <div class="col-xl-6 col-sm-6 col-12">
+                                                        <div class="mb-3">
+                                                            <label for="inputName" class="form-label">Name</label>
+                                                            <input type="text" class="form-control" id="name"
+                                                                name="name" value="{{ $admin->name }}"
+                                                                placeholder="Enter Name" oninput="validateInput('name')">
+                                                            <span class="text-danger" id="error-message-name">
+                                                                @error('name')
+                                                                    {{ $message }}
+                                                                @enderror
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6 col-sm-6 col-12">
+                                                        <div class="mb-3">
+                                                            <label for="inputEmail" class="form-label">Email</label>
+                                                            <input type="email" class="form-control" id="email"
+                                                                name="email" value="{{ $admin->email }}"
+                                                                placeholder="Enter Email" oninput="validateInput('email')">
+                                                            <span class="text-danger" id="error-message-email">
+                                                                @error('email')
+                                                                    {{ $message }}
+                                                                @enderror
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6 col-sm-6 col-12">
+                                                        <div class="mb-3">
+                                                            <label for="inputNumber" class="form-label">Phone</label>
+                                                            <input type="text" class="form-control" id="mobile"
+                                                                name="mobile" value="{{ $admin->mobile }}"
+                                                                placeholder="Enter Phone Number"
+                                                                oninput="validateInput('mobile')" onkeypress="return isNumber(event)">
+                                                            <span class="text-danger" id="error-message-mobile">
+                                                                @error('mobile')
+                                                                    {{ $message }}
+                                                                @enderror
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Row end -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-dark"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-success" id="submitButton"
+                                                        disabled>Understood</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
                     </div>
                     <!-- Row end -->
@@ -92,8 +171,69 @@
 
         </div>
         <!-- Content wrapper end -->
-
-
     </div>
+
+
     <!-- Content wrapper scroll end -->
+
+    <script>
+        function validateInput(field) {
+            const value = document.getElementById(field).value.trim();
+            let isValid = true;
+    
+            if (field === 'mobile') {
+                if (!/^\d{10}$/.test(value)) {
+                    document.getElementById(`error-message-${field}`).textContent = 'Mobile number must be 10 digits.';
+                    isValid = false;
+                } else {
+                    document.getElementById(`error-message-${field}`).textContent = '';
+                }
+            } else {
+                if (!value) {
+                    document.getElementById(`error-message-${field}`).textContent = `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`;
+                    isValid = false;
+                } else {
+                    document.getElementById(`error-message-${field}`).textContent = '';
+                }
+            }
+    
+            checkFormValidity();
+        }
+    
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            const charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    
+        function checkFormValidity() {
+            const fields = ['name', 'email', 'mobile'];
+            let allValid = true;
+    
+            fields.forEach(field => {
+                const value = document.getElementById(field).value.trim();
+                if (field === 'mobile') {
+                    if (!/^\d{10}$/.test(value)) {
+                        allValid = false;
+                    }
+                } else {
+                    if (!value) {
+                        allValid = false;
+                    }
+                }
+            });
+    
+            document.getElementById('submitButton').disabled = !allValid;
+        }
+    
+        // Initial check to disable the button on load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkFormValidity();
+        });
+    </script>
+
+    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
 @endsection

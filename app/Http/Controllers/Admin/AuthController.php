@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class AdminController extends Controller
+class AuthController extends Controller
 {
     public function Register()
     {
@@ -72,7 +72,14 @@ class AdminController extends Controller
 
     public function profile()
     {
-        return view('admin.profile.profile');
+        if(Auth::guard('admin')->check())
+        {
+            $admin = Auth::guard('admin')->user();
+            // dd($admin);
+            return view('admin.profile.profile', compact('admin'));
+        }else{
+          return redirect()->back();
+        }
     }
 
     public function showChangePasswordForm() {
@@ -81,9 +88,26 @@ class AdminController extends Controller
 
     public function changePassword(Request $request) 
     {
-        $request->validate([
-
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
         ]);
+
+        if ($validator->fails()) {
+            flash()->error('Something went wrong.');
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $admin = Auth::guard('admin')->user();
+
+            if (!Hash::check($request->old_password, $admin->password)) {
+                return redirect()->back()->withErrors(['old_password' => 'The current password is incorrect']);
+            } else {
+                $admin->password = Hash::make($request->new_password);
+                $admin->save();
+                flash()->success('Password Successfully Changed.');
+                return redirect()->route('dashboard');
+            }
+        }
     }
 
     public function logout(Request $request)
