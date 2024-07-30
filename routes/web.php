@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\ProductController;
 
 // User Route 
@@ -13,7 +13,7 @@ Route::get('/', function () {
 // ==================== Admin Route ======================= //
 // ==================== =========== ======================= //
 
-Route::controller(AdminController::class)->prefix('admin')->group(function(){
+Route::controller(AuthController::class)->prefix('admin')->group(function(){
     Route::get('login', 'login')->name('admin.login.get');
     Route::post('login', 'AdminLogin')->name('login.post');
 

@@ -17812,7 +17812,7 @@ select:-webkit-autofill:focus {
 }
 
 .modal .modal-header .btn-close {
-    background: url(../img/cancel.svg) center/1em auto no-repeat
+    /* background: url("{{ asset('assets/admin/images/cancel.svg' )}}") center/1em auto no-repeat */
 }
 
 .modal .modal-body {

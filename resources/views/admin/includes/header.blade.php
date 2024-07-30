@@ -70,7 +70,7 @@
             <a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
                 <span class="user-name d-none d-md-block">{{ Auth::guard('admin')->user()->name }}</span>
                 <span class="avatar">
-                    <img src="{{ asset('assets/admin/images/user.png') }}" alt="Admin Templates">
+                    <img src="{{ asset('assets/admin/images/user3.png') }}" alt="Admin Templates">
                     <span class="status online"></span>
                 </span>
             </a>
