@@ -23,6 +23,7 @@ Route::controller(AuthController::class)->prefix('admin')->group(function(){
     Route::middleware(['IsAdmin'])->group(function(){
         Route::get('dashboard', 'dashboard')->name('dashboard');
         Route::get('profile', 'profile')->name('admin.profile');
+        Route::post('profile', 'profileUpdate')->name('admin.profile.update');
         Route::get('change/password', 'showChangePasswordForm')->name('admin.change.password.form');
         Route::post('change/password', 'changePassword')->name('admin.change.password');
         Route::get('logout', 'logout')->name('admin.logout');

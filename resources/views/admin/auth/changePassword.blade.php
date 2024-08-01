@@ -100,7 +100,7 @@
                                     
                                         <!-- Form actions footer start -->
                                         <div class="form-actions-footer">
-                                            <a href="{{ route('admin.profile') }}" class="btn btn-light">Cancel</a>
+                                            <button type="button" class="btn btn-light" onclick="reloadForm(event)">Cancel</a>
                                             <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
                                     
@@ -126,6 +126,17 @@
     <!-- Content wrapper scroll end -->
 
     <script>
+ 
+        function reloadForm(event)
+        {
+           event.preventDefault();
+
+           const form = document.querySelector('form');
+
+           form.reset();
+        }
+
+
         document.addEventListener('DOMContentLoaded', function() {
             var inputs = document.querySelectorAll('.form-control');
             inputs.forEach(function(input) {

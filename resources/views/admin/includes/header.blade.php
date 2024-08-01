@@ -77,7 +77,7 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                 <div class="header-profile-actions">
                     <a href="{{ route('admin.profile') }}">Profile</a>
-                    <a href="account-settings.html">Settings</a>
+                    <a href="#">Settings</a>
                     <a href="{{ route('admin.change.password.form') }}">Change Password</a>
                     <a href="{{ route('admin.logout') }}">Logout</a>
                 </div>
