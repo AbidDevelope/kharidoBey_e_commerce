@@ -5,10 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRegisterRequest;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Admin;
 
 class AuthController extends Controller
 {
@@ -75,11 +75,29 @@ class AuthController extends Controller
         if(Auth::guard('admin')->check())
         {
             $admin = Auth::guard('admin')->user();
-            // dd($admin);
             return view('admin.profile.profile', compact('admin'));
         }else{
           return redirect()->back();
         }
+    }
+
+    public function profileUpdate(Request $request)
+    {
+       if(Auth::guard('admin')->check())
+       {
+        $adminId = Auth::guard('admin')->user()->id;
+        $admin = Admin::find($adminId);
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->mobile = $request->mobile;
+        $admin->save();
+
+        flash()->success('Admin Profile Updated Successfully.');
+        return redirect()->back();
+       }else{
+        flash()->error('Admin Not Found');
+        return redirect()->back();
+       }
     }
 
     public function showChangePasswordForm() {

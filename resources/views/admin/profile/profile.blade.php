@@ -23,7 +23,7 @@
                                             <h6>Name - <span>{{ Auth::guard('admin')->user()->name }}</span></h6>
                                         </div>
                                     </div>
-                                    <div class="col-sm-5 col-12">
+                                    <div class="col-sm-4 col-12">
                                         <div class="profile-tile">
                                             <span class="icon">
                                                 <i class="bi bi-pin-angle"></i>
@@ -31,7 +31,7 @@
                                             <h6>Email - <span>{{ Auth::guard('admin')->user()->email }}</span></h6>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-12">
+                                    <div class="col-sm-4 col-12">
                                         <div class="profile-tile">
                                             <span class="icon">
                                                 <i class="bi bi-telephone"></i>
@@ -41,10 +41,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="profile-avatar-tile">
+                            {{-- <div class="profile-avatar-tile">
                                 <img src="{{ asset('assets/admin/images/user3.png') }}" class="img-fluid"
                                     alt="Bootstrap Gallery" />
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -104,7 +104,8 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Row start -->
-                                            <form action="" id="editProfileForm">
+                                            <form action="{{ route('admin.profile.update') }}" id="editProfileForm" method="POST">
+                                                @csrf
                                                 <div class="row">
                                                     <div class="col-xl-6 col-sm-6 col-12">
                                                         <div class="mb-3">
@@ -134,11 +135,14 @@
                                                     </div>
                                                     <div class="col-xl-6 col-sm-6 col-12">
                                                         <div class="mb-3">
-                                                            <label for="inputNumber" class="form-label">Phone</label>
-                                                            <input type="text" class="form-control" id="mobile"
-                                                                name="mobile" value="{{ $admin->mobile }}"
-                                                                placeholder="Enter Phone Number"
-                                                                oninput="validateInput('mobile')" onkeypress="return isNumber(event)">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">IND (+91)</span>
+                                                                <input type="text" class="form-control" name="mobile"
+                                                                    placeholder="Enter phone number" id="mobile"
+                                                                    value="{{ $admin->mobile }}"
+                                                                    oninput="validateInput('mobile')"
+                                                                    onkeypress="return isNumber(event)">
+                                                            </div>
                                                             <span class="text-danger" id="error-message-mobile">
                                                                 @error('mobile')
                                                                     {{ $message }}
@@ -149,26 +153,22 @@
                                                 </div>
                                                 <!-- Row end -->
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-dark"
-                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-dark" onclick="reloadForm(event)"
+                                                        data-bs-dismiss="modal">Cancel</button>
                                                     <button type="submit" class="btn btn-success" id="submitButton"
-                                                        disabled>Understood</button>
+                                                        disabled>Update</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
                     <!-- Row end -->
                 </div>
             </div>
             <!-- Row end -->
-
         </div>
         <!-- Content wrapper end -->
     </div>
@@ -177,10 +177,20 @@
     <!-- Content wrapper scroll end -->
 
     <script>
+
+        function reloadForm(event)
+        {
+           event.preventDefault();
+
+           const form = document.querySelector('form');
+
+           form.reset();
+        }
+
         function validateInput(field) {
             const value = document.getElementById(field).value.trim();
             let isValid = true;
-    
+
             if (field === 'mobile') {
                 if (!/^\d{10}$/.test(value)) {
                     document.getElementById(`error-message-${field}`).textContent = 'Mobile number must be 10 digits.';
@@ -190,16 +200,17 @@
                 }
             } else {
                 if (!value) {
-                    document.getElementById(`error-message-${field}`).textContent = `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`;
+                    document.getElementById(`error-message-${field}`).textContent =
+                        `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`;
                     isValid = false;
                 } else {
                     document.getElementById(`error-message-${field}`).textContent = '';
                 }
             }
-    
+
             checkFormValidity();
         }
-    
+
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
             const charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -208,11 +219,11 @@
             }
             return true;
         }
-    
+
         function checkFormValidity() {
             const fields = ['name', 'email', 'mobile'];
             let allValid = true;
-    
+
             fields.forEach(field => {
                 const value = document.getElementById(field).value.trim();
                 if (field === 'mobile') {
@@ -225,10 +236,10 @@
                     }
                 }
             });
-    
+
             document.getElementById('submitButton').disabled = !allValid;
         }
-    
+
         // Initial check to disable the button on load
         document.addEventListener('DOMContentLoaded', function() {
             checkFormValidity();
