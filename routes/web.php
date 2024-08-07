@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ForgotPasswordController;
 use App\Http\Controllers\ProductController;
 
 // User Route 
@@ -30,7 +32,17 @@ Route::controller(AuthController::class)->prefix('admin')->group(function(){
     });
 });
 
+Route::controller(ForgotPasswordController::class)->prefix('admin')->group(function() {
+   Route::get('forgot_password', 'showForgetPasswordForm')->name('forgot.password');
+   Route::post('forgot_password', 'submitForgotPasswordForm')->name('forgot.password.submit');
+});
+
 Route::controller(ProductController::class)->middleware(['IsAdmin'])->prefix('admin')->group(function(){
     Route::get('product', 'product')->name('admin.product');
+});
+
+Route::controller(CategoryController::class)->prefix('admin')->group(function (){
+    Route::get('add-category', 'CategoryForm')->name('category');
+    Route::post('add-category', 'submitCategory')->name('category.submit');
 });
 
