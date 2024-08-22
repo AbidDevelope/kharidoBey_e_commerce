@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ForgotPasswordController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 // User Route 
 Route::get('/', function () {
@@ -42,7 +44,19 @@ Route::controller(ProductController::class)->middleware(['IsAdmin'])->prefix('ad
 });
 
 Route::controller(CategoryController::class)->prefix('admin')->group(function (){
-    Route::get('add-category', 'CategoryForm')->name('category');
-    Route::post('add-category', 'submitCategory')->name('category.submit');
+    Route::get('category/add', 'CategoryForm')->name('category');
+    Route::post('category/add', 'submitCategory')->name('category.submit');
+
+    Route::get('getSlug', function(Request $request) {
+        $slug = '';
+        if(!empty($request->title)) {
+            $slug = Str::slug($request->title);
+        }
+
+        return response()->json([
+            'status' => true,
+            'slug' => $slug
+        ]);
+    })->name('getSlug');
 });
 

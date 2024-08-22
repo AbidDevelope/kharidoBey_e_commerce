@@ -18,28 +18,24 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-12">
                                             <div class="mb-4">
-                                                <label class="form-label">Name <span class="text-red">*</span></label>
+                                                <label class="form-label">Name<span class="text-red">*</span></label>
                                                 <input type="text" name="name" id="name" class="form-control" placeholder="Enter Category Name">
-                                                {{-- @error('name')
-                                                    <span class="text-danger" id="error-message-name">{{ $message }}</span>
-                                                @enderror --}}
+                                                
                                                 <p></p>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-12">
                                             <div class="mb-3">
-                                                <label class="form-label">Slug <span class="text-red">*</span></label>
+                                                <label class="form-label">Slug<span class="text-red">*</span></label>
                                                 <input type="text" class="form-control" name="slug" id="slug"
-                                                    placeholder="Enter Category Slug">
-                                                    {{-- @error('slug')
-                                                        <span>{{ $message }}</span>
-                                                    @enderror --}}
+                                                    placeholder="Enter Category Slug" readonly>
+        
                                                     <p></p>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-12">
                                             <div class="mb-3">
-                                                <label class="form-label">Status <span class="text-red">*</span></label>
+                                                <label class="form-label">Status<span class="text-red">*</span></label>
                                                 <select class="form-control" name="status" id="status">
                                                     <option value="Select Category Status">Select Status</option>
                                                     <option value="0">InActive</option>
@@ -96,7 +92,12 @@
                 data: element.serializeArray(),
                 dataType: 'json',
                 success: function(response) {
-                  var errors = response['errors'];
+                    if(response['status'] == true) {
+                        $('#name').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+
+                        $('#slug').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                    }else {
+                        var errors = response['errors'];
 
                   if(errors['name']) {
                     $('#name').addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name']);
@@ -109,11 +110,29 @@
                     $('#slug').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                   }
 
+                    }
+                  
                 },
                 error: function(jqXHR, exception) {
                     console.log('something went wrong');
                 }
             });
         });
+
+        $('#name').change(function() { 
+            element = $(this);
+           $.ajax({
+            url: "{{ route('getSlug') }}",
+            type: 'GET',
+            data: { title: element.val() },
+            dataType: 'json',
+            success: function(response) {
+                if(response['status'] == true) {
+                    $('#slug').val(response['slug']);
+                }
+            }
+           });
+        });
+
     </script>
 @endsection
