@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ForgotPasswordController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 // User Route 
 Route::get('/', function () {
@@ -30,7 +34,29 @@ Route::controller(AuthController::class)->prefix('admin')->group(function(){
     });
 });
 
+Route::controller(ForgotPasswordController::class)->prefix('admin')->group(function() {
+   Route::get('forgot_password', 'showForgetPasswordForm')->name('forgot.password');
+   Route::post('forgot_password', 'submitForgotPasswordForm')->name('forgot.password.submit');
+});
+
 Route::controller(ProductController::class)->middleware(['IsAdmin'])->prefix('admin')->group(function(){
     Route::get('product', 'product')->name('admin.product');
+});
+
+Route::controller(CategoryController::class)->prefix('admin')->group(function (){
+    Route::get('category/add', 'CategoryForm')->name('category');
+    Route::post('category/add', 'submitCategory')->name('category.submit');
+
+    Route::get('getSlug', function(Request $request) {
+        $slug = '';
+        if(!empty($request->title)) {
+            $slug = Str::slug($request->title);
+        }
+
+        return response()->json([
+            'status' => true,
+            'slug' => $slug
+        ]);
+    })->name('getSlug');
 });
 

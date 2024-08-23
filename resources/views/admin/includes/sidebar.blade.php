@@ -38,15 +38,15 @@
                 <li class="sidebar-dropdown">
                     <a href="#">
                         <i class="bi bi-gem"></i>
-                        <span class="menu-text">Widgets</span>
+                        <span class="menu-text">Category</span>
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="#">Widgets</a>
+                                <a href="{{ route('category') }}">Category</a>
                             </li>
                             <li>
-                                <a href="#">Graph Widgets</a>
+                                <a href="#">Sub Category</a>
                             </li>
                         </ul>
                     </div>

@@ -20,7 +20,7 @@
         @csrf
         <div class="login-box">
             <div class="login-form">
-                <a href="index.html" class="login-logo">
+                <a href="#" class="login-logo">
                     <img src="{{ asset('assets/admin/images/icon/kharidoBey.png') }}" alt="Vico Admin" />
                 </a>
                 <div class="login-welcome">
@@ -47,7 +47,7 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
                         <label class="form-label">Password</label>
-                        <a href="#" class="btn-link ml-auto">Forgot password?</a>
+                        <a href="{{ route('forgot.password') }}" class="btn-link ml-auto">Forgot password?</a>
                     </div>
                     <input type="password" name="password" id="password" class="form-control">
                     @error('password')
