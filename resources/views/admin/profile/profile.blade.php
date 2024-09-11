@@ -65,10 +65,6 @@
                                     <span class="icon">
                                         <a data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
                                                 class="bi bi-pencil-square"></i></a>
-                                        {{-- <button type="button" class="btn btn-info" >
-                                            Static backdrop Modal
-                                        </button> --}}
-
                                     </span>
                                 </div>
                                 <div class="card-body">
