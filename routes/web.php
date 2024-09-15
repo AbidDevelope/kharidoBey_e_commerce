@@ -45,12 +45,12 @@ Route::controller(ProductController::class)->middleware(['IsAdmin'])->prefix('ad
 
 Route::controller(CategoryController::class)->prefix('admin')->group(function (){
 
-    Route::get('category', 'categories')->name('categories');
+    Route::get('categories', 'categories')->name('categories');
 
     Route::get('category/add', 'CategoryForm')->name('category');
     Route::post('category/add', 'submitCategory')->name('category.submit');
     Route::get('categories/edit/{id}', 'categoryEdit')->name('categories/edit');
-    Route::put('categories/update', 'categoryUpdate')->name('categories/update');
+    Route::put('categories/update/{id}', 'categoryUpdate')->name('categories/update');
     Route::get('categories/delete/{id}', 'categoryDelete')->name('categories/delete');
 
     Route::get('getSlug', function(Request $request) {

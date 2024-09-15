@@ -47,7 +47,6 @@ class CategoryController extends Controller
                 $category->status = $request->status;
                 $category->save();
             }
-            // dd($category);
 
             return response()->json([
                 'status' => true,
@@ -63,13 +62,32 @@ class CategoryController extends Controller
     }
 
     public function categoryEdit($id) {
-         $categories = Category::find($id);
-        //  return $categories;
+        $categories = Category::find($id);
         return view('admin.categories.edit-categories', compact('categories'));
     }
 
-    public function categoryUpdate() {
-        dd($request->all());
+    public function categoryUpdate(Request $request, $id) {
+        $validate = Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => [ 'required',
+                   Rule::unique('categories')->ignore($id)->whereNull('deleted_at')
+        ],
+            'status' => 'required|in:0,1'
+        ]); 
+
+        if($validate->passes()){ 
+            $categories = Category::find($id);
+            $categories->name = $request->name;
+            $categories->slug = $request->slug;
+            $categories->status = $request->status;
+            $categories->save();
+            
+            flash()->success('Category Updated Successfully!');
+            return redirect()->route('categories');
+        }else{
+            flash()->success('validation is failed!');
+            return redirect()->back();
+        };
     }
 
 

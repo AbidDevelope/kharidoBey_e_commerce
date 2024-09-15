@@ -1,4 +1,4 @@
-@extends('admin.layouts.master');
+@extends('admin.layouts.master')
 @section('content')
      <!-- Row start -->
      <div class="col-sm-12 col-12">
@@ -7,8 +7,9 @@
                 <div class="card-title">Edit Category</div>
             </div>
             <div class="card-body">
-                <form id="categoryUpdate" name="categoryUpdate">
-
+                <form action="{{ route('categories/update', $categories->id) }}" method="POST">
+                  @csrf
+                  @method('PUT')
                     <div class="row">
                         <div class="col-sm-12 col-12">
                             <div class="card-border">
@@ -21,7 +22,6 @@
                                                 <label class="form-label">Name<span class="text-red">*</span></label>
                                                 <input type="text" name="name" id="name" class="form-control"
                                                     value="{{ $categories->name }}">
-
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-12">
@@ -82,16 +82,6 @@
     <!-- Row end -->
 
     <script>
-
-        $('#categoryUpdate').submit(function(){
-            $.ajax({
-                url: "{{ route('categories/update') }}",
-                type: "put",
-                data: serialize(),
-                dataType: "json",
-            });
-        });
-
         $('#name').change(function() {
             element = $(this);
             $.ajax({
