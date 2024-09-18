@@ -68,7 +68,7 @@ class AuthController extends Controller
     public function dashboard()
     {
         return view('admin.dashboard');
-    }
+    } 
 
     public function profile()
     {
@@ -86,6 +86,7 @@ class AuthController extends Controller
        if(Auth::guard('admin')->check())
        {
         $adminId = Auth::guard('admin')->user()->id;
+        
         $admin = Admin::find($adminId);
         $admin->name = $request->name;
         $admin->email = $request->email;

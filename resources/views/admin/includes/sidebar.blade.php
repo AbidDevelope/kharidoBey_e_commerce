@@ -13,7 +13,7 @@
     <div class="sidebar-menu">
         <div class="sidebarMenuScroll">
             <ul>
-                <li class=" active">
+                <li class="active">
                     <a href="{{ route('dashboard') }}" class="current-page">
                         <i class="bi bi-house"></i>
                         <span class="menu-text">Dashboards</span>
@@ -43,7 +43,7 @@
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="{{ route('category') }}">Category</a>
+                                <a href="{{ route('categories') }}">Category</a>
                             </li>
                             <li>
                                 <a href="#">Sub Category</a>
