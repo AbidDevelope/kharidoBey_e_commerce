@@ -7,13 +7,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
-    public function categories()
+    public function categories(Request $request)
     {
-        $categories = Category::all();
-        return view('admin.categories.categories', compact('categories'));
+        if ($request->ajax()) {
+            $categories = Category::select('*');
+            return DataTables::of($categories)
+                ->addIndexColumn()
+                ->addColumn('action', function($category){
+                    $btn = '<a href="'.route('categories/edit', $category->id).'" class="viewRow" data-bs-toggle="modal"
+                                data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
+                    $btn .= ' <a href="'.route("categories/delete", $category->id).'" class="deleteRow ms-2">
+                                <i class="bi bi-trash text-red"></i> </a>';         
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('admin.categories.categories');
     }
 
     public function CategoryForm()
@@ -29,6 +43,7 @@ class CategoryController extends Controller
                 'required',
                 Rule::unique('categories')->whereNull('deleted_at')
             ],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|in:0,1'
         ]);
 
