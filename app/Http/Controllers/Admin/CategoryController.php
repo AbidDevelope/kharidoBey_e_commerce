@@ -17,6 +17,10 @@ class CategoryController extends Controller
             $categories = Category::select('*');
             return DataTables::of($categories)
                 ->addIndexColumn()
+                ->editColumn('image', function($category) {
+                    $imageUrl = asset('assets/admin/images/categories/' . $category->image);
+                    return '<img src="' . $imageUrl . '" width="50px" height="50px" />';
+                })
                 ->addColumn('action', function($category){
                     $btn = '<a href="'.route('categories/edit', $category->id).'" class="viewRow" data-bs-toggle="modal"
                                 data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
@@ -24,7 +28,7 @@ class CategoryController extends Controller
                                 <i class="bi bi-trash text-red"></i> </a>';         
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['image', 'action'])
                 ->make(true);
         }
         return view('admin.categories.categories');
@@ -55,11 +59,24 @@ class CategoryController extends Controller
                     'name' => $request->name,
                     'status' => $request->status,
                 ]);
+                if($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $imageName = time(). '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('assets/admin/images/categories'), $imageName);
+                    $category->image = $imageName;
+                    $category->save();
+                }
             } else {
                 $category = new Category();
                 $category->name = $request->name;
                 $category->slug = $request->slug;
                 $category->status = $request->status;
+                if($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $imageName = time(). '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('assets/admin/images/categories'), $imageName);
+                    $category->image = $imageName;
+                }
                 $category->save();
             }
 

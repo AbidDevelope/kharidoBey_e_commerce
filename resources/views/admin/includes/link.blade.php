@@ -18,8 +18,6 @@
 			************ Common Css Files *************
 		************ -->
 
-	   
-
 		<!-- Animated css -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/css/animate.css') }}">
 
@@ -41,11 +39,6 @@
 		<link rel="stylesheet" href="{{ asset('assets/admin/vendor/overlay-scroll/OverlayScrollbars.min.css') }}">
         <!-- tagsCloud Keywords CSS -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/vendor/tagsCloud/tagsCloud.css') }}" />
-		<!-- Uploader CSS -->
-		<link rel="stylesheet" href="{{ asset('assets/admin/vendor/dropzone/dropzone.min.css') }}" />
 
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-		<!-- Dropzone JS -->
-<script src="assets/vendor/dropzone/dropzone.min.js"></script>
 </head>

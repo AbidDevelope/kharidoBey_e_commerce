@@ -7,7 +7,7 @@
                 <div class="card-title">Category Information</div>
             </div>
             <div class="card-body">
-                <form method="POST" id="categoryForm" name="categoryForm">
+                <form method="POST" id="categoryForm" name="categoryForm" enctype="multipart/form-data">
 
                     <div class="row">
                         <div class="col-sm-12 col-12">
@@ -53,17 +53,9 @@
                             <div class="card-border">
                                 <div class="card-border-title">Category Images</div>
                                 <div class="card-border-body">
-                                    <div id="dropzone" class="dropzone-dark">
-                                        <div class="dropzone needsclick dz-clickable" id="demo-upload">
-
-                                            <div class="dz-message needsclick">
-                                                <button type="button" class="dz-button">Drop files here or click to
-                                                    upload.</button><br>
-                                                <span class="note needsclick">(This is just a demo dropzone. Selected files
-                                                    are
-                                                    <strong>not</strong> actually uploaded.)</span>
-                                            </div>
-                                        </div>
+                                    <input type="file" class="form-control" onchange="readURL(this)" name="image">
+                                    <div class="mt-3">
+                                    <img  src="" id="preview_img" width="150px">
                                     </div>
                                 </div>
                             </div>
@@ -80,18 +72,34 @@
         </div>
     </div>
     <!-- Row end -->
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function(e) {
+                $('#preview_img').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            }
+    </script>
     <script>
         $('#categoryForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);
+
+            var formData = new FormData(this);
 
             $('.text-danger').remove();
 
             $.ajax({
                 url: "{{ route('category.submit') }}",
                 type: 'POST',
-                data: element.serialize(),
+                data: formData,
+                contentType: false,
+                processData: false,
                 dataType: 'json',
                 success: function(response) {
                     if (response.status === true) {
