@@ -112,6 +112,12 @@ class CategoryController extends Controller
             $categories->name = $request->name;
             $categories->slug = $request->slug;
             $categories->status = $request->status;
+            if($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time(). '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('assets/admin/images/categories'), $imageName);
+                $categories->image = $imageName;
+            }
             $categories->save();
             
             flash()->success('Category Updated Successfully!');

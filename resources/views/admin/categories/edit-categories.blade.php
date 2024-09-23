@@ -7,7 +7,7 @@
                 <div class="card-title">Edit Category</div>
             </div>
             <div class="card-body">
-                <form action="{{ route('categories/update', $categories->id) }}" method="POST">
+                <form action="{{ route('categories/update', $categories->id) }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   @method('PUT')
                     <div class="row">
@@ -29,7 +29,6 @@
                                                 <label class="form-label">Slug<span class="text-red">*</span></label>
                                                 <input type="text" class="form-control" name="slug" id="slug"
                                                     value="{{ $categories->slug }}" readonly>
-
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-12">
@@ -40,11 +39,9 @@
                                                     <option value="0" {{ $categories->status == 0 ? 'selected' : '' }}>InActive</option>
                                                     <option value="1" {{ $categories->status == 1 ? 'selected' : '' }}>Active</option>
                                                 </select>
-
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -53,17 +50,9 @@
                             <div class="card-border">
                                 <div class="card-border-title">Category Images</div>
                                 <div class="card-border-body">
-                                    <div id="dropzone" class="dropzone-dark">
-                                        <div class="dropzone needsclick dz-clickable" id="demo-upload">
-
-                                            <div class="dz-message needsclick">
-                                                <button type="button" class="dz-button">Drop files here or click to
-                                                    upload.</button><br>
-                                                <span class="note needsclick">(This is just a demo dropzone. Selected files
-                                                    are
-                                                    <strong>not</strong> actually uploaded.)</span>
-                                            </div>
-                                        </div>
+                                <input type="file" class="form-control" onchange="readURL(this)" name="image" value="{{ $categories->image }}">
+                                    <div class="mt-3">
+                                    <img src="{{ asset('assets/admin/images/categories/' . $categories->image) }}" id="preview_img" width="150px">
                                     </div>
                                 </div>
                             </div>
@@ -81,6 +70,19 @@
     </div>
     <!-- Row end -->
 
+    <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#preview_img').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]); // Convert the file to a data URL
+            }
+        } 
+    </script>
     <script>
         $('#name').change(function() {
             element = $(this);
