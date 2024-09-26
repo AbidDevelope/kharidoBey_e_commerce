@@ -40,7 +40,5 @@
         <!-- tagsCloud Keywords CSS -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/vendor/tagsCloud/tagsCloud.css') }}" />
 
-		
-
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>

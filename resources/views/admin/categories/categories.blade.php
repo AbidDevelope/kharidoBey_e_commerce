@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table v-middle m-0">
+                                <table class="table v-middle m-0" id="laravel_datatable">
                                     <thead>
                                         <tr>
                                             <th>Sr. No</th>
@@ -31,56 +31,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @if (count($categories) > 0)
-                                            @foreach ($categories as $index => $category)
-                                                <tr>
-                                                    <td>
-                                                        {{ $index + 1 }}
-                                                    </td>
-                                                    <td>
-                                                        <div class="media-box">
-                                                            <img src="{{ asset('assets/admin/images/categories/fashion/fashion1.jpg') }}"
-                                                                class="media-avatar" alt="categories" />
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="media-box">
-                                                            <div class="media-box-body">
-                                                                <div class="text-truncate">{{ $category->name }}</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ $category->slug }}</td>
-                                                    <td>
-                                                        @if ($category->status == 1)
-                                                            <span class="badge shade-green min-70">Active
-                                                            </span>
-                                                        @else
-                                                            <span class="badge shade-red min-70">Inactive
-                                                            </span>
-                                                        @endif
-
-                                                    </td>
-                                                    <td>
-                                                        <div class="actions">
-                                                            <a href="{{ route('categories/edit', $category->id) }}" class="viewRow" data-bs-toggle="modal"
-                                                                data-bs-target="#viewRow">
-                                                                <i class="bi bi-pencil text-green"></i>
-                                                            </a>
-                                                            <a href="{{ route('categories/delete', $category->id ) }}" class="deleteRow">
-                                                                <i class="bi bi-trash text-red"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                        <tr>
-                                            <td class="text-center" colspan="6" >No Record Available</td>
-                                        </tr>
-                                        @endif
-                                    </tbody>
+                                  
                                 </table>
                             </div>
                         </div>
@@ -93,5 +44,31 @@
         <!-- Content wrapper end -->
 
     </div>
+
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+    
     <!-- Content wrapper scroll end -->
+    <script type="text/javascript">
+     $(document).ready(function () {
+       $('#laravel_datatable').DataTable({
+           processing: true,
+           serverSide: true,
+           ajax: "{{ route('categories') }}",
+           columns: [
+               {data: 'id', name: 'id'},
+               {data: 'image', name: 'image'},
+               {data: 'name', name: 'name'},
+               {data: 'slug', name: 'slug'},
+               {data: 'status', name: 'status'},
+               {data: 'action', name: 'action', orderable: false, searchable: false},
+           ],
+           language: {
+            emptyTable: "Data not available"
+           }
+       });
+     });
+   </script>
 @endsection

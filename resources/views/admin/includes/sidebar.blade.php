@@ -46,7 +46,7 @@
                                 <a href="{{ route('categories') }}">Category</a>
                             </li>
                             <li>
-                                <a href="#">Sub Category</a>
+                                <a href="{{ route('sub_categories') }}">Sub Category</a>
                             </li>
                         </ul>
                     </div>

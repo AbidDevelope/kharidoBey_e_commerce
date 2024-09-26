@@ -7,13 +7,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
-    public function categories()
+    public function categories(Request $request)
     {
-        $categories = Category::all();
-        return view('admin.categories.categories', compact('categories'));
+        if ($request->ajax()) {
+            $categories = Category::select('*');
+            return DataTables::of($categories)
+                ->addIndexColumn()
+                ->editColumn('image', function($category) {
+                    $imageUrl = asset('assets/admin/images/categories/' . $category->image);
+                    return '<img src="' . $imageUrl . '" width="50px" height="50px" />';
+                })
+                ->addColumn('action', function($category){
+                    $btn = '<a href="'.route('categories/edit', $category->id).'" class="viewRow" data-bs-toggle="modal"
+                                data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
+                    $btn .= ' <a href="'.route("categories/delete", $category->id).'" class="deleteRow ms-2">
+                                <i class="bi bi-trash text-red"></i> </a>';         
+                    return $btn;
+                })
+                ->rawColumns(['image', 'action'])
+                ->make(true);
+        }
+        return view('admin.categories.categories');
     }
 
     public function CategoryForm()
@@ -29,6 +47,7 @@ class CategoryController extends Controller
                 'required',
                 Rule::unique('categories')->whereNull('deleted_at')
             ],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|in:0,1'
         ]);
 
@@ -40,11 +59,24 @@ class CategoryController extends Controller
                     'name' => $request->name,
                     'status' => $request->status,
                 ]);
+                if($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $imageName = time(). '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('assets/admin/images/categories'), $imageName);
+                    $category->image = $imageName;
+                    $category->save();
+                }
             } else {
                 $category = new Category();
                 $category->name = $request->name;
                 $category->slug = $request->slug;
                 $category->status = $request->status;
+                if($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $imageName = time(). '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('assets/admin/images/categories'), $imageName);
+                    $category->image = $imageName;
+                }
                 $category->save();
             }
 
@@ -80,6 +112,12 @@ class CategoryController extends Controller
             $categories->name = $request->name;
             $categories->slug = $request->slug;
             $categories->status = $request->status;
+            if($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time(). '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('assets/admin/images/categories'), $imageName);
+                $categories->image = $imageName;
+            }
             $categories->save();
             
             flash()->success('Category Updated Successfully!');
