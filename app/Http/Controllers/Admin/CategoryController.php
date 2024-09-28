@@ -21,18 +21,26 @@ class CategoryController extends Controller
                     $imageUrl = asset('assets/admin/images/categories/' . $category->image);
                     return '<img src="' . $imageUrl . '" width="50px" height="50px" />';
                 })
+                ->editColumn('status', function($category) {
+                    if ($category->status == 1) {
+                        return '<a href="#" class="badge badge-pill text-bg-success">Active</a>';
+                    } else {
+                        return '<a href="#" class="badge badge-pill text-bg-danger">Inactive</a>';
+                    }
+                })
                 ->addColumn('action', function($category){
                     $btn = '<a href="'.route('categories/edit', $category->id).'" class="viewRow" data-bs-toggle="modal"
-                                data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
+                                 data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
                     $btn .= ' <a href="'.route("categories/delete", $category->id).'" class="deleteRow ms-2">
-                                <i class="bi bi-trash text-red"></i> </a>';         
+                                 <i class="bi bi-trash text-red"></i> </a>';         
                     return $btn;
                 })
-                ->rawColumns(['image', 'action'])
+                ->rawColumns(['image', 'status', 'action'])
                 ->make(true);
         }
         return view('admin.categories.categories');
     }
+    
 
     public function CategoryForm()
     {
@@ -87,7 +95,7 @@ class CategoryController extends Controller
             ]);
         } else {
             return response()->json([
-                'status' => true,
+                'status' => false,
                 'errors' => $validate->errors(), 
             ], 422);
         }

@@ -63,6 +63,17 @@ Route::middleware(['IsAdmin'])->group(function() {
     Route::controller(SubCategoryController::class)->prefix('admin')->group(function(){
         Route::get('sub_categories', 'subCategories')->name('sub_categories');
         Route::get('sub_categories/add', 'addSubCategory')->name('add.sub_categories');
+        Route::post('subCategory.submit', 'subCategorySubmit')->name('subCategory.submit');
+        Route::get('get-slug', function(Request $request){
+           $subCategorySlug = '';
+           if(!empty($request->title)) {
+            $subCategorySlug = Str::slug($request->title);
+           }
+           return response()->json([
+            'status' => true,
+            'slug'  => $subCategorySlug
+            ]);
+        })->name('get-slug');
     });
 
     Route::controller(ProductController::class)->prefix('admin')->group(function(){

@@ -27,22 +27,8 @@
                     Welcome back, <br />Please login to your admin account.
                 </div>
                 <div class="mb-3">
-					@if (Session::has('success'))
-                        <div class="alert alert-success" id="success-message">
-                            <span>{{ Session::get('success') }}</span>
-                        </div>
-                    @endif
-
-                    @if (Session::has('error'))
-                        <div class="alert alert-danger" id="error-message">
-                           <span>{{ Session::get('error') }}</span>
-                        </div>
-                    @endif
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}">
-                    @error('email')
-                        <span style="color: red" id="email-error">{{ $message }}</span>
-                    @enderror
                 </div>
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
@@ -50,9 +36,6 @@
                         <a href="{{ route('forgot.password') }}" class="btn-link ml-auto">Forgot password?</a>
                     </div>
                     <input type="password" name="password" id="password" class="form-control">
-                    @error('password')
-                        <span style="color: red" id="password-error">{{ $message }}</span>
-                    @enderror
                 </div>
                 <div class="login-form-actions">
                     <button type="submit" class="btn"> <span class="icon"> <i
