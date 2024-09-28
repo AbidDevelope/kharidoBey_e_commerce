@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-sm-12 col-12">
                             <div class="custom-btn-group flex-end">
-                                <a href="{{ route('categories') }}" class="btn btn-light">Cancel</a>
+                                <a href="{{ route('sub_categories') }}" class="btn btn-light">Cancel</a>
                                 <button type="submit" class="btn btn-success">Save</button>
                             </div>
                         </div>

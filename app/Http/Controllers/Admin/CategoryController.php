@@ -23,9 +23,9 @@ class CategoryController extends Controller
                 })
                 ->editColumn('status', function($category) {
                     if ($category->status == 1) {
-                        return '<a href="#" class="badge badge-pill text-bg-success">Active</a>';
+                        return '<a href="#" class="text-success">Active</a>';
                     } else {
-                        return '<a href="#" class="badge badge-pill text-bg-danger">Inactive</a>';
+                        return '<a href="#" class="text-danger">Inactive</a>';
                     }
                 })
                 ->addColumn('action', function($category){
