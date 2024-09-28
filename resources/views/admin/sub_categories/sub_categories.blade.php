@@ -23,7 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No</th>
-                                    <!-- <th>Image</th> -->
+                                    <th>Category</th>
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Status</th>
@@ -46,4 +46,28 @@
 
 <!-- Main Js Required -->
 <script src="{{ asset('assets/admin/js/main.js') }}"></script>
+<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+   <script>
+    $(document).ready(function(){
+        $('#laravel_datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('sub_categories') }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'category_name', name: 'category_name'},
+                {data: 'name', name: 'name'},
+                {data: 'slug', name: 'slug'},
+                {data: 'status', name: 'status'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            language: {
+            emptyTable: "Data not available"
+            }
+        });
+    });
+   </script> 
 @endsection

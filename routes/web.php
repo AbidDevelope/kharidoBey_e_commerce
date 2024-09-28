@@ -64,6 +64,7 @@ Route::middleware(['IsAdmin'])->group(function() {
         Route::get('sub_categories', 'subCategories')->name('sub_categories');
         Route::get('sub_categories/add', 'addSubCategory')->name('add.sub_categories');
         Route::post('subCategory.submit', 'subCategorySubmit')->name('subCategory.submit');
+        Route::get('sub_categories/delete/{id}', 'subCategoriesDelete')->name('sub_categories/delete');
         Route::get('get-slug', function(Request $request){
            $subCategorySlug = '';
            if(!empty($request->title)) {
