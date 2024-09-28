@@ -43,4 +43,7 @@
 <!-- Content wrapper end -->
 
 </div>
+
+<!-- Main Js Required -->
+<script src="{{ asset('assets/admin/js/main.js') }}"></script>
 @endsection
