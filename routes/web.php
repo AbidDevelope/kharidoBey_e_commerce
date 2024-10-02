@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ForgotPasswordController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -47,24 +48,7 @@ Route::middleware(['IsAdmin'])->group(function() {
         Route::get('categories/edit/{id}', 'categoryEdit')->name('categories/edit');
         Route::put('categories/update/{id}', 'categoryUpdate')->name('categories/update');
         Route::get('categories/delete/{id}', 'categoryDelete')->name('categories/delete');
-        Route::get('getSlug', function(Request $request) {
-            $slug = '';
-            if(!empty($request->title)) {
-                $slug = Str::slug($request->title);
-            }
-    
-            return response()->json([
-                'status' => true,
-                'slug' => $slug
-            ]);
-        })->name('getSlug');
     });
-
-    Route::controller(SubCategoryController::class)->prefix('admin')->group(function(){
-        Route::get('sub_categories', 'subCategories')->name('sub_categories');
-        Route::get('sub_categories/add', 'addSubCategory')->name('add.sub_categories');
-        Route::post('subCategory.submit', 'subCategorySubmit')->name('subCategory.submit');
-        Route::get('sub_categories/delete/{id}', 'subCategoriesDelete')->name('sub_categories/delete');
         Route::get('get-slug', function(Request $request){
            $subCategorySlug = '';
            if(!empty($request->title)) {
@@ -75,6 +59,22 @@ Route::middleware(['IsAdmin'])->group(function() {
             'slug'  => $subCategorySlug
             ]);
         })->name('get-slug');
+
+    Route::controller(SubCategoryController::class)->prefix('admin')->group(function(){
+        Route::get('sub_categories', 'subCategories')->name('sub_categories');
+        Route::get('sub_categories/add', 'addSubCategory')->name('add.sub_categories');
+        Route::post('subCategory.submit', 'subCategorySubmit')->name('subCategory.submit');
+        Route::get('sub_categories/edit/{id}', 'subCategoryEdit')->name('sub_categories/edit');
+        Route::put('sub_categories/update/{id}', 'subCategoryUpdate')->name('sub_categories/update');
+        Route::get('sub_categories/delete/{id}', 'subCategoriesDelete')->name('sub_categories/delete');
+    });
+
+    Route::controller(BrandController::class)->prefix('admin')->group(function(){
+        Route::get('brands', 'brands')->name('brands');
+        Route::get('brands/add', 'addBrands')->name('brands/add');
+        Route::post('brandSubmit', 'brandSubmit')->name('brandSubmit');
+        Route::get('brand/edit/{id}', 'brandEdit')->name('brand/edit');
+        Route::get('brand/delete/{id}', 'brandDelete')->name('brand/delete');
     });
 
     Route::controller(ProductController::class)->prefix('admin')->group(function(){

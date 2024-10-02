@@ -52,59 +52,10 @@
                     </div>
                 </li>
                 <li class="sidebar-dropdown">
-                    <a href="#">
+                    <a href="{{ route('brands') }}">
                         <i class="bi bi-collection"></i>
-                        <span class="menu-text">UI Elements</span>
+                        <span class="menu-text">Brands</span>
                     </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="accordions.html">Accordions</a>
-                            </li>
-                            <li>
-                                <a href="alerts.html">Alerts</a>
-                            </li>
-                            <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="badges.html">Badges</a>
-                            </li>
-                            <li>
-                                <a href="cards.html">Cards</a>
-                            </li>
-                            <li>
-                                <a href="carousel.html">Carousel</a>
-                            </li>
-                            <li>
-                                <a href="dropdowns.html">Dropdowns</a>
-                            </li>
-                            <li>
-                                <a href="icons.html">Icons</a>
-                            </li>
-                            <li>
-                                <a href="modals.html">Modals</a>
-                            </li>
-                            <li>
-                                <a href="offcanvas.html">Off Canvas</a>
-                            </li>
-                            <li>
-                                <a href="progress.html">Progress Bars</a>
-                            </li>
-                            <li>
-                                <a href="spinners.html">Spinners</a>
-                            </li>
-                            <li>
-                                <a href="tabs.html">Tabs</a>
-                            </li>
-                            <li>
-                                <a href="tooltips.html">Tooltips</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="sidebar-dropdown">
                     <a href="#">

@@ -35,7 +35,7 @@ class SubCategoryController extends Controller
           }
         })
         ->addColumn('action', function($subCategory){
-            $btn = '<a class="viewRow" data-bs-toggle="modal"
+            $btn = '<a href="'.route("sub_categories/edit", $subCategory->id).'" class="viewRow" data-bs-toggle="modal"
             data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
         $btn .= ' <a href="'.route("sub_categories/delete", $subCategory->id).'" class="deleteRow ms-2">
                     <i class="bi bi-trash text-red"></i> </a>';         
@@ -109,6 +109,39 @@ class SubCategoryController extends Controller
           ], 200);
       }
     } 
+
+    public function subCategoryEdit($id) {
+        $subCategories = SubCategory::find($id);
+        $categories  = Category::all();
+        if($subCategories) {
+            return view('admin.sub_categories.sub_categories_edit', compact('subCategories', 'categories'));
+        }
+    }
+
+    public function subCategoryUpdate(Request $request, $id){
+        $validate = Validator::make($request->all(), [
+            'category_id'  => 'required',
+            'name'  => 'required',
+            'slug'  => [ 'required', Rule::unique('sub_categories')->ignore($id)->whereNull('deleted_at')
+        ],
+        'status'  => 'required|in:0,1' 
+    ]);
+
+    if($validate->passes()) {
+            $subCategories = SubCategory::find($id);
+            $subCategories->category_id = $request->category_id;
+            $subCategories->name = $request->name;
+            $subCategories->slug = $request->slug;
+            $subCategories->status = $request->status;
+            $subCategories->save();
+         
+            flash()->success('SubCategory updated Successfully!');
+            return redirect()->route('sub_categories');
+    }else{
+        flash()->error('something went wrong!');
+        return redirect()->back();
+    }
+    }
 
     public function subCategoriesDelete(Request $request, $id){
           $subCategory = SubCategory::find($id);
