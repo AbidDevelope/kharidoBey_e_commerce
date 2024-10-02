@@ -57,7 +57,7 @@
             serverSide: true,
             ajax: "{{ route('sub_categories') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'DT_RowIndex', orderable: false, searchable: false, name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'category_name', name: 'category_name'},
                 {data: 'name', name: 'name'},
                 {data: 'slug', name: 'slug'},

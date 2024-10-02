@@ -57,7 +57,7 @@
         serverSide: true,
         ajax: "{{ route('categories') }}",
         columns: [
-            {data: 'id', name: 'id'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'image', name: 'image'},
             {data: 'name', name: 'name'},
             {data: 'slug', name: 'slug'},
