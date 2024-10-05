@@ -71,7 +71,7 @@ class BrandController extends Controller
             
             return response()->json([
                 'status'  => true,
-                'message' => 'everything is ok',
+                'message' => 'Brand Added Successfully!',
                 'redirect_url' => route('brands'),
             ], 200);
         }
@@ -81,6 +81,46 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         return view('admin.brands.edit_brands', compact('brand'));
     }
+
+    public function updateBrand(Request $request, $id)
+    {
+        $brand = Brand::find($id);
+
+        if (!$brand) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Brand not found', 
+            ], 404);
+        }
+
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'slug' => [
+                'required', 
+                Rule::unique('brands')->ignore($id)->whereNull('deleted_at') 
+            ],
+            'status' => 'required|in:0,1'
+        ]);
+        
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validate->errors(),
+            ], 422);
+        }
+
+        $brand->name = $request->name;
+        $brand->slug = $request->slug;
+        $brand->status = $request->status;
+        $brand->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Brand updated successfully!',
+            'redirect_url' => route('brands'),
+        ], 200);
+    }
+
 
     public function brandDelete($id){
         $brand = Brand::find($id);

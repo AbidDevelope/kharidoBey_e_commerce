@@ -107,7 +107,6 @@ $('#brandsForm').submit(function(event) {
         },
         error: function(xhr, status, error) {
             if (xhr.status == 422) {
-                console.log(error);
                 var errors = xhr.responseJSON.errors;
                 $('.text-danger').remove();
 

@@ -74,6 +74,7 @@ Route::middleware(['IsAdmin'])->group(function() {
         Route::get('brands/add', 'addBrands')->name('brands/add');
         Route::post('brandSubmit', 'brandSubmit')->name('brandSubmit');
         Route::get('brand/edit/{id}', 'brandEdit')->name('brand/edit');
+        Route::put('updateBrand/{id}', 'updateBrand')->name('updateBrand');
         Route::get('brand/delete/{id}', 'brandDelete')->name('brand/delete');
     });
 
