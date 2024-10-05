@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\ForgotPasswordController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -79,6 +79,7 @@ Route::middleware(['IsAdmin'])->group(function() {
     });
 
     Route::controller(ProductController::class)->prefix('admin')->group(function(){
-        Route::get('product', 'product')->name('admin.product');
+        Route::get('products', 'products')->name('products');
+        Route::get('products/add', 'productAdd')->name('products/add');
     });
 });

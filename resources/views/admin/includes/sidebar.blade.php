@@ -45,15 +45,15 @@
                 <li class="sidebar-dropdown">
                     <a href="#">
                         <i class="bi bi-handbag"></i>
-                        <span class="menu-text">Product</span>
+                        <span class="menu-text">Products</span>
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="{{ route('admin.product') }}">Products</a>
+                                <a href="{{ route('products') }}">Products</a>
                             </li>
                             <li>
-                                <a href="#">Add Product</a>
+                                <a href="{{ route('products/add') }}">Add Product</a>
                             </li>
                         </ul>
                     </div>
@@ -273,3 +273,7 @@
 
 </nav>
 <!-- Sidebar wrapper end -->
+
+<!-- Overlay Scroll JS -->
+<script src="{{ asset('assets/admin/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
+<script src="{{ asset('assets/admin/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>
