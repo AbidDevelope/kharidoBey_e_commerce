@@ -21,22 +21,6 @@
                 </li>
                 <li class="sidebar-dropdown">
                     <a href="#">
-                        <i class="bi bi-handbag"></i>
-                        <span class="menu-text">Product</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{ route('admin.product') }}">Products</a>
-                            </li>
-                            <li>
-                                <a href="#">Add Product</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="sidebar-dropdown">
-                    <a href="#">
                         <i class="bi bi-gem"></i>
                         <span class="menu-text">Category</span>
                     </a>
@@ -56,6 +40,23 @@
                         <i class="bi bi-collection"></i>
                         <span class="menu-text">Brands</span>
                     </a>
+                </li>
+
+                <li class="sidebar-dropdown">
+                    <a href="#">
+                        <i class="bi bi-handbag"></i>
+                        <span class="menu-text">Product</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{ route('admin.product') }}">Products</a>
+                            </li>
+                            <li>
+                                <a href="#">Add Product</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="sidebar-dropdown">
                     <a href="#">

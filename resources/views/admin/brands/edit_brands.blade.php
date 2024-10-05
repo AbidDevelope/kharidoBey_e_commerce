@@ -6,8 +6,9 @@
             <div class="card-title">Edit Brands</div>
         </div>
         <div class="card-body">
-            <form method="POST" id="brandsForm" name="brandForm">
-
+            <form method="POST" id="updateBrands" name="updateBrands">
+                @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-sm-12 col-12">
                         <div class="card-border">
@@ -52,7 +53,7 @@
                     <div class="col-sm-12 col-12">
                         <div class="custom-btn-group flex-end">
                             <a href="{{ route('brands') }}" class="btn btn-light">Cancel</a>
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="submit" class="btn btn-success">Update</button>
                         </div>
                     </div>
                 </div>
@@ -61,4 +62,80 @@
     </div>
 </div>
 <!-- Row end -->
+
+<script>
+$('#updateBrands').submit(function(event) {
+    event.preventDefault();
+
+    var formData = {
+        name: $('#name').val(),
+        slug: $('#slug').val(),
+        status: $('#brandStatus').val(),
+        _token: "{{ csrf_token() }}",
+        _method: 'PUT'
+    };
+
+    $('.text-danger').remove();
+
+    $.ajax({
+        url: "{{ route('updateBrand', $brand->id) }}",
+        type: 'POST',
+        data: formData,
+        dataType: "json",
+        success: function(response) {
+            if (response.status === true) {
+                window.location.href = response.redirect_url;
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status == 422) {
+                var errors = xhr.responseJSON.errors;
+
+                $.each(errors, function(field, errorMessages) {
+                    if (field === 'name') {
+                        $('#name').after('<span class="text-danger">' + errorMessages[0] +
+                            '</span>');
+                    }
+                    if (field === 'slug') {
+                        $('#slug').after('<span class="text-danger">' + errorMessages[0] +
+                            '</span>');
+                    }
+                    if (field === 'status') {
+                        $('#brandStatus').after('<span class="text-danger">' +
+                            errorMessages[0] + '</span>');
+                    }
+                });
+            } else {
+                console.log('Something went wrong');
+            }
+        }
+    });
+});
+</script>
+<script>
+$('#name').change(function() {
+    element = $(this);
+
+    $.ajax({
+        url: "{{ route('get-slug') }}",
+        type: "GET",
+        data: {
+            title: element.val(),
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response['status'] == true) {
+                $('#slug').val(response['slug']);
+            }
+        },
+        error: function(xhr, status, error) {
+            if (response['status'] == false) {
+                console.errors(error);
+            }
+        }
+    });
+});
+</script>
+<!-- Main Js Required -->
+<script src="{{ asset('assets/admin/js/main.js') }}"></script>
 @endsection
