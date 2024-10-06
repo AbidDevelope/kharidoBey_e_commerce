@@ -57,6 +57,7 @@ class BrandController extends Controller
         ]);
 
         if($validate->fails()){
+            flash()->success('Validation is error');
             return response()->json([
                 'status' => false,
                 'errors' => $validate->errors(),
@@ -68,7 +69,8 @@ class BrandController extends Controller
             $brands->slug = $request->slug;
             $brands->status = $request->status;
             $brands->save();
-            
+
+            flash()->success('Brand Added Successfully!');
             return response()->json([
                 'status'  => true,
                 'message' => 'Brand Added Successfully!',
@@ -87,6 +89,7 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         if (!$brand) {
+            flash()->error('Brand not found');
             return response()->json([
                 'status' => false,
                 'message' => 'Brand not found', 
@@ -103,6 +106,7 @@ class BrandController extends Controller
         ]);
         
         if ($validate->fails()) {
+            flash()->error('Validation is error');
             return response()->json([
                 'status' => false,
                 'errors' => $validate->errors(),
@@ -114,6 +118,7 @@ class BrandController extends Controller
         $brand->status = $request->status;
         $brand->save();
 
+        flash()->success('Brand Updated Successfully!');
         return response()->json([
             'status' => true,
             'message' => 'Brand updated successfully!',
