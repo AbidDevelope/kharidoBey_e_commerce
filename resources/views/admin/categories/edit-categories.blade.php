@@ -79,7 +79,7 @@
                     $('#preview_img').attr('src', e.target.result);
                 }
                 
-                reader.readAsDataURL(input.files[0]); // Convert the file to a data URL
+                reader.readAsDataURL(input.files[0]); 
             }
         } 
     </script>
