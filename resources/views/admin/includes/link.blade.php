@@ -12,41 +12,29 @@
     <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
     <meta property="og:type" content="Website">
     <meta property="og:site_name" content="KharidoBey Gallery">
+
     <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.svg') }}">
-
-    <!-- *************
-			************ Common Css Files *************
-		************ -->
-
     <!-- Animated css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/animate.css') }}">
-
     <!-- Bootstrap font icons css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/fonts/bootstrap/bootstrap-icons.css') }}">
-
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/main.min.css') }}">
-
-    <!-- Bootstrap CSS -->
-
-
-
-    <!-- **
-			************ Vendor Css Files *************
-		** -->
-
     <!-- Scrollbar CSS -->
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/overlay-scroll/OverlayScrollbars.min.css') }}">
     <!-- tagsCloud Keywords CSS -->
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/tagsCloud/tagsCloud.css') }}" />
 
-
+    
 
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
     <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
-
     <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
     <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+     <!-- Dropzone JS -->
+     {{-- <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script> --}}
+    <!-- Main Js Required -->
+    <script src="{{ asset('assets/admin/js/main.js') }}"></script>
 </head>

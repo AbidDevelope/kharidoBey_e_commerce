@@ -103,6 +103,4 @@
 
 </div>
 <!-- Content wrapper end -->
-<!-- Main Js Required -->
-<script src="{{ asset('assets/admin/js/main.js') }}"></script>
 @endsection
