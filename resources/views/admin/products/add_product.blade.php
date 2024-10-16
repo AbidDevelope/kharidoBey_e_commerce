@@ -184,11 +184,12 @@
                                                             <label class="form-label">Product Category <span
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="category_id"
-                                                                id="category_id">
+                                                                id="category">
                                                                 <option value="Select Product Category">Select Category
                                                                 </option>
                                                                 @foreach ($categories as $category)
-                                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                                    <option value="{{ $category->id }}">
+                                                                        {{ $category->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -198,12 +199,9 @@
                                                             <label class="form-label">Product Sub Category <span
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="sub_category_id"
-                                                                id="sub_category_id">
+                                                                id="subcategory">
                                                                 <option value="Select Product Category">Select Sub Category
                                                                 </option>
-                                                                <option value="Mobiles">Mobiles</option>
-                                                                <option value="Books">Books</option>
-                                                                <option value="Games">Games</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -218,11 +216,12 @@
                                                         <div class="mb-2">
                                                             <label class="form-label">Product Brand <span
                                                                     class="text-red">*</span></label>
-                                                            <select class="form-control" name="brand_id" id="brand_id">
+                                                            <select class="form-control" name="brand_id" id="brand">
                                                                 <option value="Select Product Category">Select Brand
                                                                 </option>
                                                                 @foreach ($brands as $brand)
-                                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                                    <option value="{{ $brand->id }}">{{ $brand->name }}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -352,19 +351,51 @@
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status === 404) {
-                    // 404 error (Not Found)
-                    alert('Slug route not found.');
-                } else if (jqXHR.status === 500) {
-                    // 500 error (Internal Server Error)
-                    alert('Internal server error occurred.');
-                } else {
-                    // General error message
-                    alert('An error occurred: ' + textStatus + ' - ' + errorThrown);
+                    if (jqXHR.status === 404) {
+                        // 404 error (Not Found)
+                        alert('Slug route not found.');
+                    } else if (jqXHR.status === 500) {
+                        // 500 error (Internal Server Error)
+                        alert('Internal server error occurred.');
+                    } else {
+                        // General error message
+                        alert('An error occurred: ' + textStatus + ' - ' + errorThrown);
+                    }
+                    console.log(jqXHR.responseText);
                 }
-                console.log(jqXHR.responseText);
-            }
             });
+        });
+    </script>
+    <script>
+        $('#category').change(function() {
+            var categoryId = $(this).val();
+
+            if (categoryId === 'Select Product Category') {
+                $('#subcategory').empty().append(
+                    '<option value="Select Product Category">Select Sub Category</option>');
+                return;
+            }
+
+            if (categoryId) {
+                $.ajax({
+                    url: "{{ route('subcategory.get', '') }}/" + categoryId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status) {
+                            var subcategoryDropdown = $('#subcategory');
+                            subcategoryDropdown.empty();
+                            $.each(response.subcategories, function(key, subcategory) {
+                                subcategoryDropdown.append('<option value="' + subcategory.id +
+                                    '">' + subcategory.name + '</option>');
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error fetching subcategories');
+                    }
+                });
+            }
         });
     </script>
 @endsection
