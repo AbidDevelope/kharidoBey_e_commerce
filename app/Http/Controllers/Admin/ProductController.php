@@ -57,20 +57,40 @@ class ProductController extends Controller
         return redirect()->route('products');
     }
 
+    public function tempImageUpload(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            dd($request->all());
+            $file = $request->file('image');
+            dd($file);
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/admin/images/products/uploads/temp'), $filename);
+
+            return response()->json([
+                'status' => true,
+                'file' => $filename
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+        ]);
+    }
+
     public function getSubcategory($id)
     {
         $subcategory = SubCategory::where('category_id', $id)->get();
-    
-        if($subcategory){
+
+        if ($subcategory) {
             return response()->json([
                 'status' => true,
                 'subcategories' => $subcategory
-            ]);   
-        }else{
-          return response()->json([
-            'status'=> false,
-            'message' => 'No subcategories found' 
-          ]);
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No subcategories found'
+            ]);
         }
     }
 }

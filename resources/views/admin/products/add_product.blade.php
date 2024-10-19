@@ -256,9 +256,8 @@
                                             <div class="card-border-title">Product Images</div>
                                             <div class="card-border-body">
 
-                                                <div id="dropzone" class="dropzone-dark">
-                                                    <div action="/upload" class="dropzone needsclick dz-clickable"
-                                                        id="demo-upload">
+                                                {{-- <div id="dropzone" class="dropzone-dark">
+                                                    <div class="dropzone needsclick dz-clickable" id="dropzoneFileUpload">
 
                                                         <div class="dz-message needsclick">
                                                             <button type="button" class="dz-button">Drop files here or
@@ -270,7 +269,9 @@
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </div> --}}
+                                                <div id="dropzone" name="image" class="dropzone"></div>
+                                                
 
                                             </div>
                                         </div>
@@ -295,7 +296,43 @@
     <!-- Content wrapper scroll end -->
 
     <!-- Dropzone JS -->
-    <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script>
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+
+    <!-- Dropzone Script -->
+    <script>
+        Dropzone.autoDiscover = false;
+
+        var uploadedImages = [];
+
+        var myDropzone = new Dropzone("#dropzone", {
+            url: "{{ route('upload-temp-images') }}",
+            maxFiles: 6,
+            acceptedFiles: ".jpeg,.jpg,.png",
+            addRemoveLinks: true,
+            autoProcessQueue: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function(image, response) {
+                if (response.status) {
+                    uploadedImages.push(response.image);
+                }
+            },
+            error: function(image, response) {
+                console.log("Error uploading image:", response);
+            },
+            init: function() {
+                var myDropzone = this;
+
+                this.on("maxfilesexceeded", function(image) {
+                    alert("You can only upload a maximum of 6 images.");
+                    myDropzone.removeFile(image);
+                });
+            }
+        });
+    </script>
+
 
     <script>
         $('#productForm').submit(function(event) {
