@@ -45,11 +45,13 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($validate)->withInput();
         } else {
             $admin = Admin::where('email', $request->email)->first();
-
+            session()->put('email', $request->email);
+            
             if (!$admin) {
                 flash()->error('Email is not registered!');
                 return redirect()->back()->withInput();
             } else {
+                
                 $credentials = $request->only('email', 'password');
 
                 if (Auth::guard('admin')->attempt($credentials)) {
@@ -133,8 +135,13 @@ class AuthController extends Controller
     {
         if(Auth::guard('admin')->check())
         {
+            $email = session()->get('email');
+            
             Auth::guard('admin')->logout();
             $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            session()->flash('email', $email);
 
             flash()->success('You Have Successfully Logout.');
             return redirect()->route('admin.login.get');
