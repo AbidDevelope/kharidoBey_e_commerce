@@ -254,25 +254,8 @@
                                     <div class="col-sm-12 col-12">
                                         <div class="card-border">
                                             <div class="card-border-title">Product Images</div>
-                                            <div class="card-border-body">
-
-                                                {{-- <div id="dropzone" class="dropzone-dark">
-                                                    <div class="dropzone needsclick dz-clickable" id="dropzoneFileUpload">
-
-                                                        <div class="dz-message needsclick">
-                                                            <button type="button" class="dz-button">Drop files here or
-                                                                click to
-                                                                upload.</button><br>
-                                                            <span class="note needsclick">(This is just a demo dropzone.
-                                                                Selected files are
-                                                                <strong>not</strong> actually uploaded.)</span>
-                                                        </div>
-
-                                                    </div>
-                                                </div> --}}
-                                                <div id="dropzone" name="image" class="dropzone"></div>
-                                                
-
+                                            <div class="card-border-body" id="image">
+                                                <div id="dropzone" class="dropzone"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -297,7 +280,8 @@
 
     <!-- Dropzone JS -->
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
-    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+    {{-- <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script> --}}
+    <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script>
 
     <!-- Dropzone Script -->
     <script>
@@ -335,6 +319,20 @@
 
 
     <script>
+        $('#productForm input, #productForm select, #productForm textarea').on('keyup change', function(){
+            var field = $(this).attr('id');
+            $('#' + field).next('.text-danger').remove();
+        });
+
+        $('#productForm input, #productForm select, #productForm textarea').on('blur', function() {
+            var field = $(this).attr('id');
+            var value = $(this).val().trim(); // Get the value and remove leading/trailing spaces
+            if (value === '') {
+                $('#' + field).next('.text-danger').remove(); // Clear any previous error
+                $('#' + field).after('<span class="text-danger">This field is required</span>'); // Show the error
+            }
+        });
+
         $('#productForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);

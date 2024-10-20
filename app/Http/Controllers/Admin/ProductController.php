@@ -60,9 +60,7 @@ class ProductController extends Controller
     public function tempImageUpload(Request $request)
     {
         if ($request->hasFile('image')) {
-            dd($request->all());
             $file = $request->file('image');
-            dd($file);
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('assets/admin/images/products/uploads/temp'), $filename);
 
