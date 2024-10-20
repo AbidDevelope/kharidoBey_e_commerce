@@ -8,26 +8,29 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\SubCategory;
 
 class ProductController extends Controller
 {
-    public function products() {
+    public function products()
+    {
         return view('admin.products.products');
     }
 
     public function productAdd()
     {
         $brands = Brand::orderBy('name')->get();
-        $categories = Category::orderBy('name')->get();  
-        
-        return view('admin.products.add_product', compact('brands','categories'));
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.products.add_product', compact('brands', 'categories'));
     }
 
-    public function ProductSubmit(ProductRequest $request) {
+    public function ProductSubmit(ProductRequest $request)
+    {
         dd('OKKK');
-        
+
         $validatedData = $request->validate();
-        
+
         $product = new Product();
         $product->category_id = $validatedData['category_id'];
         $product->sub_category_id = $validatedData['sub_category_id'];
@@ -49,8 +52,45 @@ class ProductController extends Controller
         $product->status = $validatedData['status'];
 
         $product->save();
-        
+
         flash()->success('Product Added Successfully!');
         return redirect()->route('products');
+    }
+
+    public function tempImageUpload(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            dd($request->all());
+            $file = $request->file('image');
+            dd($file);
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/admin/images/products/uploads/temp'), $filename);
+
+            return response()->json([
+                'status' => true,
+                'file' => $filename
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+        ]);
+    }
+
+    public function getSubcategory($id)
+    {
+        $subcategory = SubCategory::where('category_id', $id)->get();
+
+        if ($subcategory) {
+            return response()->json([
+                'status' => true,
+                'subcategories' => $subcategory
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No subcategories found'
+            ]);
+        }
     }
 }

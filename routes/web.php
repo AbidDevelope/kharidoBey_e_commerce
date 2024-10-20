@@ -82,5 +82,7 @@ Route::middleware(['IsAdmin'])->group(function () {
         Route::get('products', 'products')->name('products');
         Route::get('products/add', 'productAdd')->name('products/add');
         Route::post('products/submit', 'ProductSubmit')->name('products/submit');
+        Route::get('subcategory/get/{id}', 'getSubcategory')->name('subcategory.get');
+        Route::post('/upload-temp-images', 'tempImageUpload')->name('upload-temp-images');
     });
 });
