@@ -25,6 +25,7 @@
                 </a>
                 <div class="login-welcome">
                     Welcome back, <br />Please login to your admin account.
+                    Welcome back, <br />Please login to your admin account.
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
