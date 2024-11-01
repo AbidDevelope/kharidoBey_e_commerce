@@ -22,9 +22,9 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => 'required|integer',
-            'subcategory' => 'required|integer',
-            'brand' => 'required|integer',
+            'category_id' => 'required|integer',
+            'sub_category_id' => 'required|integer',
+            'brand_id' => 'required|integer',
             
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
@@ -36,13 +36,13 @@ class ProductRequest extends FormRequest
             'old_price' => 'required|numeric|min:0',
             'compare_price' => 'required|numeric|min:0',
             
-            'is_featured' => 'required|boolean',
+            'is_featured' => 'required',
             'sku' => 'required|string|max:255',
             'barcode' => 'required|string|max:255',
-            'track_qty' => 'required|boolean', 
+            'track_qty' => 'required', 
             'qty' => 'required|integer|min:0', 
             
-            'stock' => 'required|integer|min:0',
+            'stock' => 'required',
             'status' => 'required|boolean',
 
             'image' => 'required|image|mimes:jpeg.jpg,png,gif'

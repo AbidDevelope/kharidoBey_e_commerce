@@ -89,7 +89,7 @@
                                                     </div>
                                                     <div class="col-sm-6 col-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Product Discount <span
+                                                            <label class="form-label">Product Discount(%) <span
                                                                     class="text-red">*</span></label>
                                                             <input type="text" class="form-control" name="discount"
                                                                 id="discount" placeholder="Enter Product Discount">
@@ -126,7 +126,7 @@
                                                             <label class="form-label">Product Track Qty.<span
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="track_qty" id="track_qty">
-                                                                <option value="Select Product Category">Select
+                                                                <option value="">Select
                                                                 </option>
                                                                 <option value="Yes">Yes</option>
                                                                 <option value="No">No</option>
@@ -164,8 +164,7 @@
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="status"
                                                                 id="productStatus">
-                                                                <option value="Select Product Category">Select
-                                                                </option>
+                                                                <option value="">Select</option>
                                                                 <option value="0">Inactive</option>
                                                                 <option value="1">Active</option>
                                                             </select>
@@ -184,9 +183,8 @@
                                                             <label class="form-label">Product Category <span
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="category_id"
-                                                                id="category">
-                                                                <option value="Select Product Category">Select Category
-                                                                </option>
+                                                                id="category_id">
+                                                                <option value="">Select Category</option>
                                                                 @foreach ($categories as $category)
                                                                     <option value="{{ $category->id }}">
                                                                         {{ $category->name }}</option>
@@ -199,8 +197,8 @@
                                                             <label class="form-label">Product Sub Category <span
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="sub_category_id"
-                                                                id="subcategory">
-                                                                <option value="Select Product Category">Select Sub Category
+                                                                id="sub_category_id">
+                                                                <option value="">Select Sub Category
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -216,8 +214,8 @@
                                                         <div class="mb-2">
                                                             <label class="form-label">Product Brand <span
                                                                     class="text-red">*</span></label>
-                                                            <select class="form-control" name="brand_id" id="brand">
-                                                                <option value="Select Product Category">Select Brand
+                                                            <select class="form-control" name="brand_id" id="brand_id">
+                                                                <option value="">Select Brand
                                                                 </option>
                                                                 @foreach ($brands as $brand)
                                                                     <option value="{{ $brand->id }}">{{ $brand->name }}
@@ -239,7 +237,7 @@
                                                                     class="text-red">*</span></label>
                                                             <select class="form-control" name="is_featured"
                                                                 id="is_featured">
-                                                                <option value="Select Product Category">Select
+                                                                <option value="">Select
                                                                 </option>
                                                                 <option value="Yes">Yes</option>
                                                                 <option value="No">No</option>
@@ -280,7 +278,7 @@
 
     <!-- Dropzone JS -->
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
-    {{-- <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script> --}}
+
     <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script>
 
     <!-- Dropzone Script -->
@@ -316,20 +314,19 @@
             }
         });
     </script>
-
-
+    
     <script>
-        $('#productForm input, #productForm select, #productForm textarea').on('keyup change', function(){
+        $('#productForm input, #productForm select, #productForm textarea, #dropzone').on('keyup change', function(){
             var field = $(this).attr('id');
             $('#' + field).next('.text-danger').remove();
         });
 
-        $('#productForm input, #productForm select, #productForm textarea').on('blur', function() {
+        $('#productForm input, #productForm select, #productForm textarea, #dropzone').on('blur', function() {
             var field = $(this).attr('id');
-            var value = $(this).val().trim(); // Get the value and remove leading/trailing spaces
+            var value = $(this).val().trim(); 
             if (value === '') {
-                $('#' + field).next('.text-danger').remove(); // Clear any previous error
-                $('#' + field).after('<span class="text-danger">This field is required</span>'); // Show the error
+                $('#' + field).next('.text-danger').remove(); 
+                $('#' + field).after('<span class="text-danger">This field is required</span>'); 
             }
         });
 
@@ -347,7 +344,7 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status === true) {
-                        console.log('Sucess');
+                        window.location.href = response.redirect_url;
                     }
                 },
                 error: function(jqXHR) {
@@ -387,13 +384,10 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 404) {
-                        // 404 error (Not Found)
                         alert('Slug route not found.');
                     } else if (jqXHR.status === 500) {
-                        // 500 error (Internal Server Error)
                         alert('Internal server error occurred.');
                     } else {
-                        // General error message
                         alert('An error occurred: ' + textStatus + ' - ' + errorThrown);
                     }
                     console.log(jqXHR.responseText);
@@ -402,12 +396,12 @@
         });
     </script>
     <script>
-        $('#category').change(function() {
+        $('#category_id').change(function() {
             var categoryId = $(this).val();
 
-            if (categoryId === 'Select Product Category') {
-                $('#subcategory').empty().append(
-                    '<option value="Select Product Category">Select Sub Category</option>');
+            if (categoryId === '') {
+                $('#sub_category_id').empty().append(
+                    '<option value="">Select Sub Category</option>');
                 return;
             }
 
@@ -418,7 +412,7 @@
                     dataType: "json",
                     success: function(response) {
                         if (response.status) {
-                            var subcategoryDropdown = $('#subcategory');
+                            var subcategoryDropdown = $('#sub_category_id');
                             subcategoryDropdown.empty();
                             $.each(response.subcategories, function(key, subcategory) {
                                 subcategoryDropdown.append('<option value="' + subcategory.id +

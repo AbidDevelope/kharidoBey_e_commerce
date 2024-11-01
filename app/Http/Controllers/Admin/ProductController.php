@@ -27,34 +27,37 @@ class ProductController extends Controller
 
     public function ProductSubmit(ProductRequest $request)
     {
-        dd('OKKK');
+        // dd($request->all());
 
-        $validatedData = $request->validate();
+        $data = $request->validated();
 
         $product = new Product();
-        $product->category_id = $validatedData['category_id'];
-        $product->sub_category_id = $validatedData['sub_category_id'];
-        $product->brand_id = $validatedData['brand_id'];
-        $product->title = $validatedData['title'];
-        $product->slug = $validatedData['slug'];
-        $product->short_description = $validatedData['short_description'];
-        $product->long_description = $validatedData['long_description'];
-        $product->discount = $validatedData['discount'];
-        $product->selling_price = $validatedData['selling_price'];
-        $product->old_price = $validatedData['old_price'];
-        $product->compare_price = $validatedData['compare_price'];
-        $product->is_featured = $validatedData['is_featured'];
-        $product->sku = $validatedData['sku'];
-        $product->barcode = $validatedData['barcode'];
-        $product->track_qty = $validatedData['track_qty'];
-        $product->qty = $validatedData['qty'];
-        $product->stock = $validatedData['stock'];
-        $product->status = $validatedData['status'];
-
+        $product->category_id = $data['category_id'];
+        $product->sub_category_id = $data['sub_category_id'];
+        $product->brand_id = $data['brand_id'];
+        $product->title = $data['title'];
+        $product->slug = $data['slug'];
+        $product->short_description = $data['short_description'];
+        $product->long_description = $data['long_description'];
+        $product->discount = $data['discount'];
+        $product->selling_price = $data['selling_price'];
+        $product->old_price = $data['old_price'];
+        $product->compare_price = $data['compare_price'];
+        $product->is_featured = $data['is_featured'];
+        $product->sku = $data['sku'];
+        $product->barcode = $data['barcode'];
+        $product->track_qty = $data['track_qty'];
+        $product->qty = $data['qty'];
+        $product->stock = $data['stock'];
+        $product->status = $data['status'];
         $product->save();
 
         flash()->success('Product Added Successfully!');
-        return redirect()->route('products');
+        return response()->json([
+            'status' => true,
+            'message' => "Product Added Successfully",
+            'redirect_url' => route('products')
+        ], 200);
     }
 
     public function tempImageUpload(Request $request)
