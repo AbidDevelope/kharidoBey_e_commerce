@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\ProductImage;
 
 class Product extends Model
 {
@@ -35,4 +36,9 @@ class Product extends Model
         'stock',
         'status',
     ];
+
+    public function productImage() 
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }
