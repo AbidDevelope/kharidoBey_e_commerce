@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\ProductImage;
 use App\Models\SubCategory;
 
 class ProductController extends Controller
@@ -51,6 +52,24 @@ class ProductController extends Controller
         $product->stock = $data['stock'];
         $product->status = $data['status'];
         $product->save();
+
+        if($product) {
+            if($request->hasFile('image'))
+            {
+                foreach($request->file('image') as $index => $file)
+                {
+                    $fileName = time().'_'.$file->getClientOriginalName();
+                    $file->move(public_path('assets/admin/images/products/uploads'), $fileName );
+                    
+                    $product->productImage()->create([
+                        'product_id' => $product->id,
+                        'image' => $fileName,
+                        'is_primary' => $index === 0 ? true : false,
+                        'sort_order'  => $index + 1,
+                    ]);
+                }   
+            }
+        }
 
         flash()->success('Product Added Successfully!');
         return response()->json([

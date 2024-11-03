@@ -290,6 +290,7 @@
         var myDropzone = new Dropzone("#dropzone", {
             url: "{{ route('upload-temp-images') }}",
             maxFiles: 6,
+            paramName: 'image',
             acceptedFiles: ".jpeg,.jpg,.png",
             addRemoveLinks: true,
             autoProcessQueue: true,
@@ -334,6 +335,11 @@
             event.preventDefault();
             var element = $(this);
             var formData = new FormData(this);
+
+            myDropzone.getAcceptedFiles().forEach(function(file, index) {
+                formData.append('image[' + index + ']', file);
+            });
+
             $('.text-danger').remove();
             $.ajax({
                 url: "{{ route('products/submit') }}",
