@@ -15,7 +15,12 @@ class ProductController extends Controller
 {
     public function products()
     {
-        return view('admin.products.products');
+        $products = Product::with(['productImage' => function($query){
+            $query->select('id', 'product_id', 'image');
+        }])->get();
+         
+        // return $products;
+        return view('admin.products.products', compact('products'));
     }
 
     public function productAdd()
