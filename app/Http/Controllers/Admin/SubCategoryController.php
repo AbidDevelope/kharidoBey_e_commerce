@@ -35,11 +35,13 @@ class SubCategoryController extends Controller
           }
         })
         ->addColumn('action', function($subCategory){
-            $btn = '<a href="'.route("sub_categories/edit", $subCategory->id).'" class="viewRow" data-bs-toggle="modal"
+            $btn = '<div class="actions">';
+            $btn .= '<a href="'.route("sub_categories/edit", $subCategory->id).'" class="viewRow" data-bs-toggle="modal"
             data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
         $btn .= ' <a href="'.route("sub_categories/delete", $subCategory->id).'" class="deleteRow ms-2">
                     <i class="bi bi-trash text-red"></i> </a>';         
-        return $btn;
+                    $btn .= '<div>';
+                    return $btn;
         })
         ->rawColumns(['status','action'])
         ->make(true);

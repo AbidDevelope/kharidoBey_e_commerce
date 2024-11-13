@@ -36,17 +36,26 @@ class ProductController extends Controller
                     }
                 })
                 ->addColumn('image', function ($product) {
-                    if ($product->productImage->isNotEmpty()) {
+                    if ($product->productImage && $product->productImage->isNotEmpty()) {
                         $imageUrl = asset('assets/admin/images/products/uploads/' . $product->productImage->first()->image);
                         return '<img src="' . $imageUrl . '" class="media-avatar" alt="Product Image" width="90" height="60" />';
                     } else {
                         $defaultImage = asset('assets/admin/images/products/uploads/default.jpg');
                         return '<img src="' . $defaultImage . '" class="media-avatar" alt="No Image Available" width="90" height="60" />';
-                    }
+                    }                    
                 })
                 ->addColumn('action', function ($product) {
-                    $btn = '<a class="viewRow" data-bs-toggle="modal" data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
-                    $btn .= ' <a class="deleteRow ms-2"><i class="bi bi-trash text-red"></i> </a>';
+                    $btn = '<div class="actions">';
+                    $btn .= '<a href="#" class="viewRow" data-bs-toggle="modal" data-bs-target="#viewRow">
+                                <i class="bi bi-list text-green"></i>
+                             </a>';
+                    $btn .= '<a href="#" class="editRow ms-2">
+                                <i class="bi bi-pencil text-red"></i>
+                            </a>';
+                    $btn .= '<a href="#" class="deleteRow ms-2">
+                                <i class="bi bi-trash text-red"></i>
+                             </a>';
+                    $btn .= '</div>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'image', 'action'])

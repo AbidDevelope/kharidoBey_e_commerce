@@ -31,10 +31,12 @@ class BrandController extends Controller
                     }
                 })
                 ->addColumn('action', function($brand){
-                    $btn = '<a href="'.route('brand/edit', $brand->id).'" class="viewRow" data-bs-toggle="modal"
+                    $btn = '<div class="actions">';
+                    $btn .= '<a href="'.route('brand/edit', $brand->id).'" class="viewRow" data-bs-toggle="modal"
                                  data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
                     $btn .= ' <a href="'.route("brand/delete", $brand->id).'" class="deleteRow ms-2">
                                  <i class="bi bi-trash text-red"></i> </a>';         
+                    $btn .= '<div>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action'])
