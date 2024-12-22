@@ -36,10 +36,12 @@ class CategoryController extends Controller
                     }
                 })
                 ->addColumn('action', function($category){
-                    $btn = '<a href="'.route('categories/edit', $category->id).'" class="viewRow" data-bs-toggle="modal"
+                    $btn = '<div class="actions">';
+                    $btn .= '<a href="'.route('categories/edit', $category->id).'" class="viewRow" data-bs-toggle="modal"
                                  data-bs-target="#viewRow"><i class="bi bi-pencil text-green"></i></a>';
                     $btn .= ' <a href="'.route("categories/delete", $category->id).'" class="deleteRow ms-2">
                                  <i class="bi bi-trash text-red"></i> </a>';         
+                    $btn .= '<div>';
                     return $btn;
                 })
                 ->rawColumns(['image', 'status', 'action'])
