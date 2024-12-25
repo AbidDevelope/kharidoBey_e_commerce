@@ -32,45 +32,6 @@
                                     </tr>
                                 </thead>
 
-                                {{-- <tbody>
-                                    @foreach ($products as $index => $product)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>
-                                                <div class="media-box">
-                                                    @if ($product->productImage->isNotEmpty())
-                                                        <img src="{{ asset('assets/admin/images/products/uploads/' . $product->productImage->first()->image) }}"
-                                                            class="media-avatar" alt="Product Image" width="90"
-                                                            height="60" />
-                                                    @else
-                                                        <img src="{{ asset('assets/admin/images/products/uploads/default.jpg') }}"
-                                                            class="media-avatar" alt="No Image Available" />
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>{{ $product->title }}</td>
-                                            <td>{{ $product->selling_price }}</td>
-                                            <td>{{ $product->qty }}</td>
-                                            <td>{{ $product->sku }}</td>
-                                            <td><span class="badge shade-green min-70">Active</span></td>
-                                            <td>
-                                                <div class="actions">
-                                                    <a href="#" class="viewRow" data-bs-toggle="modal"
-                                                        data-bs-target="#viewRow">
-                                                        <i class="bi bi-list text-green"></i>
-                                                    </a>
-                                                    <a href="#" class="deleteRow">
-                                                        <i class="bi bi-trash text-red"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody> --}}
-
-
-
-
                             </table>
                         </div>
 
@@ -79,9 +40,88 @@
             </div>
         </div>
         <!-- Row end -->
-
     </div>
     <!-- Content wrapper end -->
+    <!-- Modal View Row -->
+    <div class="modal modal-dark fade" id="viewProduct" tabindex="-1" aria-labelledby="viewRowLabel" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewRowLabel">View Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Row start -->
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Customer Name</h6>
+                                <h5>Garrett Winters</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Customer ID</h6>
+                                <h5>#VIVO00763</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Contact</h6>
+                                <h5>067-676-98320</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Amount Spent</h6>
+                                <h5>$2570.00</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Last Login</h6>
+                                <h5>21/11/2021</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Coupons Used</h6>
+                                <h5>7</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Total Orders</h6>
+                                <h5>95</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Cancelled Orders</h6>
+                                <h5>2</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Reviews</h6>
+                                <h5>21</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row end -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
@@ -131,6 +171,11 @@
                 language: {
                     emptyTable: "Data not available"
                 }
+            });
+
+
+            $('#datatable').on('click', '.viewRow', function(){
+                alert('ok');
             });
         });
     </script>
