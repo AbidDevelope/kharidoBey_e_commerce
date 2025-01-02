@@ -9,6 +9,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Products</div>
+                        <a href="#" class="viewProduct" data-bs-toggle="modal" data-bs-target="#viewProduct">
+                                <i class="bi bi-list text-green"></i>
+                             </a>'
                         <div class="ml-auto">
                             <a href="{{ route('products/add') }}" class="btn btn-success">
                                 <i class="bi bi-plus"></i>Products
@@ -43,73 +46,18 @@
     </div>
     <!-- Content wrapper end -->
     <!-- Modal View Row -->
-    <div class="modal modal-dark fade" id="viewProduct" tabindex="-1" aria-labelledby="viewRowLabel" style="display: none;"
+    <div class="modal modal-dark fade" id="viewProduct" tabindex="-1" aria-labelledby="viewProductLabel" style="display: none;"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="viewRowLabel">View Details</h5>
+                    <h5 class="modal-title" id="viewProductLabel">View Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="productDetails">
 
                     <!-- Row start -->
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Customer Name</h6>
-                                <h5>Garrett Winters</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Customer ID</h6>
-                                <h5>#VIVO00763</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Contact</h6>
-                                <h5>067-676-98320</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Amount Spent</h6>
-                                <h5>$2570.00</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Last Login</h6>
-                                <h5>21/11/2021</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Coupons Used</h6>
-                                <h5>7</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Total Orders</h6>
-                                <h5>95</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Cancelled Orders</h6>
-                                <h5>2</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-6">
-                            <div class="customer-card">
-                                <h6>Reviews</h6>
-                                <h5>21</h5>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <!-- Row end -->
 
                 </div>
@@ -174,9 +122,49 @@
             });
 
 
-            $('#datatable').on('click', '.viewRow', function(){
-                alert('ok');
+            $('#datatable').on('click', '.viewProduct', function () {
+                const id = $(this).data('id');
+                const url = "{{ url('admin/product') }}/" + id;
+
+                  $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status === true) {
+                            const productDetails = res.data;
+                let detailsHtml = `
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Product Name</h6>
+                                <h5>${productDetails.name}</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Price</h6>
+                                <h5>${productDetails.price}</h5>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                $('#productDetails').html(detailsHtml);
+
+                            // Show the modal
+                            $('#viewProduct').modal('show');
+                        } else {
+                            toastr.error('Product not found.', 'Error');
+                        }
+                    },
+                    error: function (err) {
+                        console.error('Error:', err.responseJSON || err);
+                        alert('Failed to fetch product.');
+                    }
+                });
             });
+
         });
     </script>
+    
 @endsection

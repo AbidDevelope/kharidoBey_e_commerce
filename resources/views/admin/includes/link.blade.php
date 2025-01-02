@@ -28,10 +28,11 @@
     
 
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
-    <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
     <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
      <!-- Dropzone JS -->
      {{-- <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script> --}}
