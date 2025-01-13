@@ -150,8 +150,7 @@
                     </div>
                 `;
                 $('#productDetails').html(detailsHtml);
-
-                            // Show the modal
+                        //  Show the modal
                             $('#viewProduct').modal('show');
                         } else {
                             toastr.error('Product not found.', 'Error');

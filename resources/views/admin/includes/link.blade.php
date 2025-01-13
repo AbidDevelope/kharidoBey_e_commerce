@@ -17,6 +17,7 @@
     <!-- Animated css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/animate.css') }}">
     <!-- Bootstrap font icons css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/admin/fonts/bootstrap/bootstrap-icons.css') }}">
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/main.min.css') }}">
@@ -28,14 +29,13 @@
     
 
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
-    <!-- <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+   
     <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
+
     <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
     <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
-
-     <!-- Dropzone JS -->
-     {{-- <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script> --}}
-    <!-- Main Js Required -->
+    <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script> 
     <script src="{{ asset('assets/admin/js/main.js') }}"></script>
+
 </head>
