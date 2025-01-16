@@ -46,7 +46,7 @@ class ProductController extends Controller
                 })
                 ->addColumn('action', function ($product) {
                     $btn = '<div class="actions">';
-                    $btn .= '<a href="#" class="viewRow" data-bs-toggle="modal" data-bs-target="#viewRow">
+                    $btn .= '<a href="#" class="viewProduct" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#viewProduct">
                                 <i class="bi bi-list text-green"></i>
                              </a>';
                     $btn .= '<a href="#" class="editRow ms-2">
@@ -76,8 +76,6 @@ class ProductController extends Controller
 
     public function ProductSubmit(ProductRequest $request)
     {
-        // dd($request->all());
-
         $data = $request->validated();
 
         $product = new Product();
@@ -157,6 +155,23 @@ class ProductController extends Controller
                 'status' => false,
                 'message' => 'No subcategories found'
             ]);
+        }
+    }
+
+    public function getProduct($id)
+    {
+        $product = Product::with('productImage')->find($id);
+            if($product)
+        {
+            return response()->json([
+                'status' => true,
+                'data' => $product 
+            ], 200);
+        }else{
+          return response()->json([
+            'status' => false,
+            'message' => 'Product not Found.'
+          ], 404);
         }
     }
 }

@@ -9,14 +9,13 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Products</div>
-                        <div class="ml-auto">
+                         <div class="ml-auto">
                             <a href="{{ route('products/add') }}" class="btn btn-success">
                                 <i class="bi bi-plus"></i>Products
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
-
                         <div class="table-responsive">
                             <table class="table v-middle m-0" id="datatable">
                                 <thead>
@@ -31,57 +30,40 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-
-                                {{-- <tbody>
-                                    @foreach ($products as $index => $product)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>
-                                                <div class="media-box">
-                                                    @if ($product->productImage->isNotEmpty())
-                                                        <img src="{{ asset('assets/admin/images/products/uploads/' . $product->productImage->first()->image) }}"
-                                                            class="media-avatar" alt="Product Image" width="90"
-                                                            height="60" />
-                                                    @else
-                                                        <img src="{{ asset('assets/admin/images/products/uploads/default.jpg') }}"
-                                                            class="media-avatar" alt="No Image Available" />
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>{{ $product->title }}</td>
-                                            <td>{{ $product->selling_price }}</td>
-                                            <td>{{ $product->qty }}</td>
-                                            <td>{{ $product->sku }}</td>
-                                            <td><span class="badge shade-green min-70">Active</span></td>
-                                            <td>
-                                                <div class="actions">
-                                                    <a href="#" class="viewRow" data-bs-toggle="modal"
-                                                        data-bs-target="#viewRow">
-                                                        <i class="bi bi-list text-green"></i>
-                                                    </a>
-                                                    <a href="#" class="deleteRow">
-                                                        <i class="bi bi-trash text-red"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody> --}}
-
-
-
-
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
         <!-- Row end -->
-
     </div>
     <!-- Content wrapper end -->
+    <!-- Modal View Row -->
+    <div class="modal modal-dark fade" id="viewProduct" tabindex="-1" aria-labelledby="viewProductLabel" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewProductLabel">View Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="productDetails">
+
+                    <!-- Row start -->
+                    
+                    <!-- Row end -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
@@ -132,6 +114,50 @@
                     emptyTable: "Data not available"
                 }
             });
+
+
+            $('#datatable').on('click', '.viewProduct', function () {
+                const id = $(this).data('id');
+                const url = "{{ url('admin/product') }}/" + id;
+
+                  $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status === true) {
+                            const productDetails = res.data;
+                let detailsHtml = `
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Product Name</h6>
+                                <h5>${productDetails.name}</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-6">
+                            <div class="customer-card">
+                                <h6>Price</h6>
+                                <h5>${productDetails.price}</h5>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                $('#productDetails').html(detailsHtml);
+                        //  Show the modal
+                            $('#viewProduct').modal('show');
+                        } else {
+                            toastr.error('Product not found.', 'Error');
+                        }
+                    },
+                    error: function (err) {
+                        console.error('Error:', err.responseJSON || err);
+                        alert('Failed to fetch product.');
+                    }
+                });
+            });
+
         });
     </script>
+    
 @endsection

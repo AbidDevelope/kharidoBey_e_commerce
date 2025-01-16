@@ -87,7 +87,7 @@
         $('#name').change(function() {
             element = $(this);
             $.ajax({
-                url: "{{ route('getSlug') }}",
+                url: "{{ route('get-slug') }}",
                 type: 'GET',
                 data: {
                     title: element.val()
