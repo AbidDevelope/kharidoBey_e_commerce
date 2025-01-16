@@ -158,20 +158,16 @@ class ProductController extends Controller
         }
     }
 
-    public function getProduct($id)
+    public function viewProducts($id)
     {
-        $product = Product::with('productImage')->find($id);
-            if($product)
+        $products = Product::with('productImage')->find($id);
+        if($products)
         {
-            return response()->json([
-                'status' => true,
-                'data' => $product 
-            ], 200);
+            return view('admin.products.view_products', compact('products'));
         }else{
-          return response()->json([
-            'status' => false,
-            'message' => 'Product not Found.'
-          ], 404);
+            flash()->success('Error', 'Product not Found');
+            return redirect()->back();
         }
     }
+
 }
