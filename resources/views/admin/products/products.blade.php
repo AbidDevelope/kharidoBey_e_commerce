@@ -9,17 +9,13 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Products</div>
-                        <a href="#" class="viewProduct" data-bs-toggle="modal" data-bs-target="#viewProduct">
-                                <i class="bi bi-list text-green"></i>
-                             </a>'
-                        <div class="ml-auto">
+                         <div class="ml-auto">
                             <a href="{{ route('products/add') }}" class="btn btn-success">
                                 <i class="bi bi-plus"></i>Products
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
-
                         <div class="table-responsive">
                             <table class="table v-middle m-0" id="datatable">
                                 <thead>
@@ -34,10 +30,8 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
