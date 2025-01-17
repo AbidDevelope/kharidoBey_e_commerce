@@ -99,6 +99,13 @@
 
                 window.location.href = url;
             });
+
+            $('#datatable').on('click', '.editProduct', function(){
+                const id = $(this).data('id');
+                const url = "{{ route('products.edit') }}";
+
+                window.location.href = url;
+             });
         });
     </script>
 @endsection
