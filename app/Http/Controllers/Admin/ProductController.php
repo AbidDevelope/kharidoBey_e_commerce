@@ -46,10 +46,10 @@ class ProductController extends Controller
                 })
                 ->addColumn('action', function ($product) {
                     $btn = '<div class="actions">';
-                    $btn .= '<a href="#" class="viewProduct" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#viewProduct">
+                    $btn .= '<a href="#" class="viewProduct" data-id="'.$product->id.'">
                                 <i class="bi bi-list text-green"></i>
                              </a>';
-                    $btn .= '<a href="#" class="editRow ms-2">
+                    $btn .= '<a href="#" class="editProduct ms-2" data-id="'.$product->id.'">
                                 <i class="bi bi-pencil text-red"></i>
                             </a>';
                     $btn .= '<a href="#" class="deleteRow ms-2">
@@ -168,6 +168,11 @@ class ProductController extends Controller
             flash()->success('Error', 'Product not Found');
             return redirect()->back();
         }
+    }
+
+    public function editProducts()
+    {
+        return view('admin.products.edit_products');
     }
 
 }
