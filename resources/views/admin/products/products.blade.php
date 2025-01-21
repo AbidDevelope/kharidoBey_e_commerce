@@ -102,7 +102,7 @@
 
             $('#datatable').on('click', '.editProduct', function(){
                 const id = $(this).data('id');
-                const url = "{{ route('products.edit') }}";
+                const url = "{{ route('products.edit', ':id') }}".replace(':id', id);
 
                 window.location.href = url;
              });
