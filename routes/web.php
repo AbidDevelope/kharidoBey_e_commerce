@@ -85,6 +85,12 @@ Route::middleware(['IsAdmin'])->group(function () {
         Route::get('subcategory/get/{id}', 'getSubcategory')->name('subcategory.get');
         Route::post('/upload-temp-images', 'tempImageUpload')->name('upload-temp-images');
         Route::get('products/view/{id}', 'viewProducts')->name('products.view');
-        Route::get('products/edit', 'editProducts')->name('products.edit');  
+        Route::get('products/edit/{id}', 'editProducts')->name('products.edit');  
     });
 });
+
+Route::fallback(function(){
+    return redirect('page-not-found/404');
+});
+Route::view('page-not-found/404', 'errors.404');
+
