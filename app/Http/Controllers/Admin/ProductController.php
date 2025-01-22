@@ -170,9 +170,20 @@ class ProductController extends Controller
         }
     }
 
-    public function editProducts()
+    public function editProducts($id)
     {
-        return view('admin.products.edit_products');
+        $data['products'] = Product::with(['brand', 'categories', 'subcategories'])->where('id', $id)->first();
+        $data['brands'] = Brand::orderBy('name')->get();
+        $data['category'] = Category::orderBy('name')->get();
+        
+        if($data['products']->category_id)
+        {
+            $data['subcategories'] = SubCategory::where('category_id', $data['products']->category_id)->get();
+            // dd($data);
+        }else{
+          $data['subcategories'] = [];
+        }
+        return view('admin.products.edit_products', $data);
     }
 
 }

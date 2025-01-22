@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ProductImage;
+use App\Models\Brand;
+use App\Models\Category;
 
 class Product extends Model
 {
@@ -40,5 +42,20 @@ class Product extends Model
     public function productImage() 
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function subcategories()
+    {
+        return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id');
     }
 }
