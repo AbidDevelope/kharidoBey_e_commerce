@@ -172,17 +172,27 @@ class ProductController extends Controller
 
     public function editProducts($id)
     {
-        $data['products'] = Product::with(['brand', 'categories', 'subcategories'])->where('id', $id)->first();
+        $data['products'] = Product::with(['brand', 'categories', 'subcategories', 'productImage'])->where('id', $id)->first();
+        // dd($data);
         $data['brands'] = Brand::orderBy('name')->get();
         $data['category'] = Category::orderBy('name')->get();
         
         if($data['products']->category_id)
         {
             $data['subcategories'] = SubCategory::where('category_id', $data['products']->category_id)->get();
-            // dd($data);
         }else{
           $data['subcategories'] = [];
         }
+
+        $data['exitingImages'] = $data['products']->productImage->map(function ($images){
+            return [
+                'name' => $images->image, 
+                'url' => asset('assets/admin/images/products/uploads/' . $images->image), 
+                'size' => file_exists(public_path('assets/admin/images/products/uploads/' . $images->image)) 
+                ? filesize(public_path('assets/admin/images/products/uploads/' . $images->image)) 
+                : 0, 
+            ];
+        });
         return view('admin.products.edit_products', $data);
     }
 

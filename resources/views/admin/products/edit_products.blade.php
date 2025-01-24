@@ -277,6 +277,60 @@
 </div>
 <!-- Content wrapper end -->
 </div>
+
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
+    <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script>
+    <!-- Dropzone Script -->
+    <script>
+        Dropzone.autoDiscover = false;
+
+        var uploadedImages = @json($exitingImages);
+
+        var myDropzone = new Dropzone("#dropzone", {
+            url: "{{ route('upload-temp-images') }}",
+            maxFiles: 6,
+            paramName: 'image',
+            acceptedFiles: ".jpeg,.jpg,.png",
+            addRemoveLinks: true,
+            autoProcessQueue: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function(image, response) {
+                if (response.status) {
+                    uploadedImages.push(response.image);
+                }
+            },
+            error: function(image, response) {
+                console.log("Error uploading image:", response);
+            },
+            init: function() {
+                var myDropzone = this;
+
+                uploadedImages.forEach(function(getImage){
+                    var mockFile = {
+                    name: getImage.name, 
+                    size: getImage.size, 
+                    existing: true, 
+                };
+
+                    // Add mock file to Dropzone
+                    myDropzone.emit("addedfile", mockFile);
+                    myDropzone.emit("thumbnail", mockFile, getImage.url);
+                    myDropzone.emit("complete", mockFile);
+
+                   myDropzone.files.push(mockFile);
+                })
+
+                this.on("maxfilesexceeded", function(image) {
+                    alert("You can only upload a maximum of 6 images.");
+                    myDropzone.removeFile(image);
+                });
+            }
+        });
+    </script>
+
 <script>
     $('#category_id').change(function(){
       var categoryId = $(this).val();
