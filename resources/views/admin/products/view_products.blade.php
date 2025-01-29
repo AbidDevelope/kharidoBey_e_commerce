@@ -20,7 +20,7 @@
                                         @php
                                         $primaryImage = $products->productImage->where('is_primary', '1')->first();
                                         @endphp
-                                          
+
                                         @if ($primaryImage)
                                         <img class="product-card-img-top"
                                             src="{{ asset('assets/admin/images/products/uploads/' . $primaryImage->image ) }}"
@@ -32,7 +32,8 @@
                                         <div class="product-card-body">
                                             <h5 class="product-title">{{ $products->title }}</h5>
                                             <div class="product-price">
-                                                <span class="disount-price">&#8377; {{ $products->selling_price }}</span>
+                                                <span class="disount-price">&#8377;
+                                                    {{ $products->selling_price }}</span>
                                                 <span class="actucal-price">&#8377; {{ $products->old_price }}</span>
                                                 <span class="off-price">{{ $products->discount }} Off</span>
                                             </div>
@@ -47,14 +48,19 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
-                                    <div class="product-card">
+                                    <div class="row">
                                         @foreach($products->productImage->where('is_primary', '0') as $multiImage)
-                                        <img class="product-card-img-top"
-                                        src="{{ asset('assets/admin/images/products/uploads/'. $multiImage->image) }}"
-                                        height="135px" alt="Product Main Image">
+                                        <div class="col-md-3 col-sm-4 col-6 mb-2">
+                                            <div class="product-card">
+                                                <img class="product-card-img-top img-fluid rounded shadow"
+                                                    src="{{ asset('assets/admin/images/products/uploads/'. $multiImage->image) }}"
+                                                    height="135px" alt="Product Image">
+                                            </div>
+                                        </div>
                                         @endforeach
-                                    </div>   
+                                    </div>
                                 </div>
+
                             </div>
                             <!-- Row end -->
                         </div>
@@ -96,7 +102,7 @@
                             </div>
                         </div>
                         <!-- Row end -->
-      
+
                     </div>
                 </div>
             </div>
