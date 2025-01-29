@@ -105,7 +105,14 @@
                 const url = "{{ route('products.edit', ':id') }}".replace(':id', id);
 
                 window.location.href = url;
-             });
+            });
+ 
+            $('#datatable').on('click', '.deleteEdit', function(){
+                const id = $(this).data('id');
+                const url = "{{ route('products.delete', ':id') }}".replace(':id', id);
+
+                window.location.href = url;
+            });
         });
     </script>
 @endsection
