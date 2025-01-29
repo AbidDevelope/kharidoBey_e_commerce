@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\ProductImage;
 use App\Models\SubCategory;
 use Yajra\DataTables\Facades\DataTables;
+use File;
 
 class ProductController extends Controller
 {
@@ -52,7 +53,7 @@ class ProductController extends Controller
                     $btn .= '<a href="#" class="editProduct ms-2" data-id="'.$product->id.'">
                                 <i class="bi bi-pencil text-red"></i>
                             </a>';
-                    $btn .= '<a href="#" class="deleteRow ms-2">
+                    $btn .= '<a href="#" class="deleteEdit ms-2" data-id="'.$product->id.'">
                                 <i class="bi bi-trash text-red"></i>
                              </a>';
                     $btn .= '</div>';
@@ -173,7 +174,6 @@ class ProductController extends Controller
     public function editProducts($id)
     {
         $data['products'] = Product::with(['brand', 'categories', 'subcategories', 'productImage'])->where('id', $id)->first();
-        // dd($data);
         $data['brands'] = Brand::orderBy('name')->get();
         $data['category'] = Category::orderBy('name')->get();
         
@@ -251,5 +251,34 @@ class ProductController extends Controller
             'redirect_url' => route('products')
         ], 200);
     } 
+
+    public function deleteProducts($id)
+    {
+       $products = Product::with('productImage')->find($id);
+  
+       if($products)
+       {
+         foreach($products->productImage as $images)
+        {
+           $path = public_path('assets/admin/images/products/uploads/'. $images->image);
+           if(\File::exists($path))
+           {
+              \File::delete($path);
+           }else{
+            flash()->error('file does not exit');
+             return redirect()->back();
+           }
+        }
+
+        $products->productImage()->delete();
+        $products->delete();
+         
+        flash()->success('Product Deleted Successfully');
+        return redirect()->back(); 
+       }else{
+        flash()->error('Product Not Found');
+        return redirect()->back();
+       }
+    }
 
 }
