@@ -13,7 +13,8 @@
                     <div class="card-title">Edit Product Information</div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" id="productForm" enctype="multipart/form-data">
+                    <form method="POST" id="updateProduct" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="row">
                             <div class="col-sm-8 col-12">
@@ -22,6 +23,9 @@
                                     <div class="card-border-body">
 
                                         <div class="row">
+                                            <input type="hidden" class="form-control" name="id"
+                                                id="productId" value="{{ $products->id }}">
+                            
                                             <div class="col-sm-6 col-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Product Name <span
@@ -126,11 +130,12 @@
                                                     <label class="form-label">Product Track Qty.<span
                                                             class="text-red">*</span></label>
                                                     <select class="form-control" name="track_qty" id="track_qty">
-                                                        <option value="">Select
-                                                        </option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                    </select>
+                                                        <option value="">Select</option>
+                                                       
+                                                          <option value="Yes" {{ $products->track_qty == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                          <option value="No" {{ $products->track_qty == 'No' ? 'selected' : '' }}>No</option>
+                                                    
+                                                        </select>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-12">
@@ -331,6 +336,39 @@
         });
     </script>
 
+    <script>
+        $('#title').change(function(){
+            var value = $(this).val();
+         
+            $.ajax({
+                url: "{{route('get-slug')}}",
+                type: 'GET',
+                dataType: "Json",
+                data: {
+                    title : value
+                },
+                success: function(res)
+                {
+                   if(res['status'] == true)
+                   {
+                    $('#slug').val(res['slug']);
+                   }
+                },
+                error: function(xhr, status, error)
+                {
+                   if(xhr.status === 404)
+                   {
+                    alert('Slug not Found');
+                   }else if(xhr.status === 500){
+                    alert('Internal server Error'); 
+                   }else{
+                    alert('An error occurred: ' + status + ' - ' + error);
+                   }
+                }
+            });
+        });
+    </script>
+
 <script>
     $('#category_id').change(function(){
       var categoryId = $(this).val();
@@ -365,6 +403,61 @@
             }  
         });
       }
+    });
+</script>
+<script>
+
+        $('#updateProduct input, #updateProduct select, #updateProduct textarea').on('keyup change', function(){
+                    var field = $(this).attr('id');
+                    $('#' + field).next('.text-danger').remove();
+        });
+
+        $('#updateProduct input, #updateProduct select, #updateProduct textarea').on('blur', function() {
+            var field = $(this).attr('id');
+            var value = $(this).val().trim(); 
+            if (value === '') {
+                $('#' + field).next('.text-danger').remove(); 
+                $('#' + field).after('<span class="text-danger">This field is required</span>'); 
+            }
+        });
+
+
+    $('#updateProduct').submit(function(event){
+      event.preventDefault();
+      var id = $('#productId').val();
+      var formData = new FormData(this);
+
+        myDropzone.getAcceptedFiles().forEach(function(file, index) {
+                formData.append('image[' + index + ']', file);
+            });
+
+        $('.text-danger').remove();
+           
+         
+      $.ajax({
+        url: "{{ route('update.products', '') }}/" + id,
+        type: "POST",
+        headers: {
+          'X-HTTP-Method-Override' : 'PUT'
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function(res)
+        {
+            if(res.status === true)
+            { 
+               window.location.href = res.redirect_url;
+            }else{
+                alert('Error:' + res.message);
+            }
+        },
+        error: function(xhr, status, error)
+        {
+            alert('something went wrong : ' + error);
+        }
+      });
     });
 </script>
 @endsection

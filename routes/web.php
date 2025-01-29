@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('user.index');
 });
 
+Route::fallback(function(){
+    return redirect('page-not-found/404');
+});
+Route::view('page-not-found/404', 'errors.404');
+
 
 // ==================== Admin Route ======================= //
 // ==================== =========== ======================= //
@@ -86,11 +91,9 @@ Route::middleware(['IsAdmin'])->group(function () {
         Route::post('/upload-temp-images', 'tempImageUpload')->name('upload-temp-images');
         Route::get('products/view/{id}', 'viewProducts')->name('products.view');
         Route::get('products/edit/{id}', 'editProducts')->name('products.edit');  
+        Route::put('update/products/{id}', 'updateProducts')->name('update.products');
     });
 });
 
-Route::fallback(function(){
-    return redirect('page-not-found/404');
-});
-Route::view('page-not-found/404', 'errors.404');
+
 

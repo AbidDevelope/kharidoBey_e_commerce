@@ -196,4 +196,60 @@ class ProductController extends Controller
         return view('admin.products.edit_products', $data);
     }
 
+    public function updateProducts(ProductRequest $request, $id)
+    {
+
+        $data = $request->validated();
+
+        $products = Product::find($id);
+        if($products)
+        {
+            $products->category_id = $data['category_id'];
+            $products->sub_category_id = $data['sub_category_id'];
+            $products->brand_id = $data['brand_id'];
+            $products->title = $data['title'];
+            $products->slug = $data['slug'];
+            $products->short_description = $data['short_description'];
+            $products->long_description = $data['long_description'];
+            $products->discount = $data['discount'];
+            $products->selling_price = $data['selling_price'];
+            $products->old_price = $data['old_price'];
+            $products->compare_price = $data['compare_price'];
+            $products->is_featured = $data['is_featured'];
+            $products->sku = $data['sku'];
+            $products->barcode = $data['barcode'];
+            $products->track_qty = $data['track_qty'];
+            $products->qty = $data['qty'];
+            $products->stock = $data['stock'];
+            $products->status = $data['status'];
+            $products->save();
+
+            if($request->hasFile('image'))
+            {
+                foreach($request->file('image') as $index => $file)
+               {
+                $fileName = time(). '_' .$file->getClientOriginalExtension();
+                $file->move(public_path('assets/admin/images/products/uploads'), $fileName);
+               }
+
+               $maxShortOrder = $products->productImage()->max('sort_order');
+
+               $products->productImage()->create([
+                'product_id' => $products->id,
+                'image' => $fileName,
+                'is_primary' => '0',
+                'sort_order' => $maxShortOrder + 1,
+               ]);
+
+            }
+        }
+
+        flash()->success('Product Updated Successfully');  
+        return response()->json([
+            'status' => true,
+            'message' => 'Product Updated Successfully',
+            'redirect_url' => route('products')
+        ], 200);
+    } 
+
 }

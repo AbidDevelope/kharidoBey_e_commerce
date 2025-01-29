@@ -21,7 +21,7 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'category_id' => 'required|integer',
             'sub_category_id' => 'required|integer',
             'brand_id' => 'required|integer',
@@ -44,10 +44,19 @@ class ProductRequest extends FormRequest
             
             'stock' => 'required',
             'status' => 'required|boolean',
-
-            'image' => 'required|array',
-            'image.*' => 'image|mimes:jpeg,jpg,png,gif|max:2048'
         ];
+
+        if($this->isMethod('post'))
+        {
+            $rules['image'] = 'required|array';
+            $rules['image.*'] = 'image|mimes:jpeg,jpg,png,gif|max:2048' ; 
+        }else if($this->isMethod('put') || $this->isMethod('patch'))
+        {
+           $rules['image'] = 'nullable|array'; 
+           $rules['image.*'] = 'image|mimes:jpeg,jpg,png,gif|max:2048' ; 
+        }
+
+        return $rules;
     }
     
 }
