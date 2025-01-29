@@ -184,15 +184,16 @@ class ProductController extends Controller
           $data['subcategories'] = [];
         }
 
-        $data['exitingImages'] = $data['products']->productImage->map(function ($images){
-            return [
-                'name' => $images->image, 
-                'url' => asset('assets/admin/images/products/uploads/' . $images->image), 
-                'size' => file_exists(public_path('assets/admin/images/products/uploads/' . $images->image)) 
-                ? filesize(public_path('assets/admin/images/products/uploads/' . $images->image)) 
-                : 0, 
-            ];
-        });
+        $data['exitingImages'] = ProductImage::where('product_id', $id)->get();
+        // $data['exitingImages'] = $data['products']->productImage->map(function ($images){
+        //     return [
+        //         'name' => $images->image, 
+        //         'url' => asset('assets/admin/images/products/uploads/' . $images->image), 
+        //         'size' => file_exists(public_path('assets/admin/images/products/uploads/' . $images->image)) 
+        //         ? filesize(public_path('assets/admin/images/products/uploads/' . $images->image)) 
+        //         : 0, 
+        //     ];
+        // });
         return view('admin.products.edit_products', $data);
     }
 
