@@ -294,12 +294,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                @foreach($exitingImages as $images)
+                                @foreach($existingImages as $index => $images)
                                 <div class="card p-4" style="width: 16rem;">
-                                    <img class="card-img-top" src="{{ asset('assets/admin/images/products/uploads/'. $images->image) }}" alt="Card image cap">
+                                    <img class="card-img-top"
+                                        src="{{ asset('assets/admin/images/products/uploads/'. $images->image) }}"
+                                        alt="Card image cap">
                                     <div class="card-body text-center">
-                                        
-                                        <a href="#" class="btn btn-primary">remove</a>
+
+                                        <a href="#" class="btn btn-primary deleteImage"
+                                            data-id="{{ $images->id }}">remove</a>
                                     </div>
                                 </div>
                                 @endforeach
@@ -352,7 +355,7 @@ var myDropzone = new Dropzone("#dropzone", {
     init: function() {
         var myDropzone = this;
 
-        
+
         this.on("maxfilesexceeded", function(image) {
             alert("You can only upload a maximum of 6 images.");
             myDropzone.removeFile(image);
@@ -470,6 +473,28 @@ $('#updateProduct').submit(function(event) {
         error: function(xhr, status, error) {
             alert('something went wrong : ' + error);
         }
+    });
+});
+</script>
+<script>
+$('.deleteImage').on('click', function(event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+
+    $.ajax({
+        url: "{{ route('delete.image', '') }}/" + id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            if (res.status === true) {
+
+            } else {
+
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('something went wrong : ', error);
+        },
     });
 });
 </script>
