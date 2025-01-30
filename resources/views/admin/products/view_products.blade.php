@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
                                     <div class="row">
-                                        @foreach($products->productImage->where('is_primary', '0') as $multiImage)
+                                        @foreach($products->productImage->where('is_primary', '0')->where('status', '1') as $multiImage)
                                         <div class="col-md-3 col-sm-4 col-6 mb-2">
                                             <div class="product-card">
                                                 <img class="product-card-img-top img-fluid rounded shadow"

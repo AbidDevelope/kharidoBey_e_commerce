@@ -11,7 +11,6 @@ use App\Models\Category;
 use App\Models\ProductImage;
 use App\Models\SubCategory;
 use Yajra\DataTables\Facades\DataTables;
-
 use Illuminate\Support\Facades\File;
 
 
@@ -280,6 +279,7 @@ class ProductController extends Controller
             'message'  => 'Product Image Deleted Successfully',
             'product image id' => $productImage->id,
         ]);
+    }
 
     public function deleteProducts($id)
     {
