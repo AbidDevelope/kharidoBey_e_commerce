@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\ProductImage;
 use App\Models\SubCategory;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -110,6 +111,7 @@ class ProductController extends Controller
                         'image' => $fileName,
                         'is_primary' => $index === 0 ? true : false,
                         'sort_order'  => $index + 1,
+                        'status' => '1'
                     ]);
                 }
             }
@@ -184,16 +186,10 @@ class ProductController extends Controller
           $data['subcategories'] = [];
         }
 
-        $data['exitingImages'] = ProductImage::where('product_id', $id)->get();
-        // $data['exitingImages'] = $data['products']->productImage->map(function ($images){
-        //     return [
-        //         'name' => $images->image, 
-        //         'url' => asset('assets/admin/images/products/uploads/' . $images->image), 
-        //         'size' => file_exists(public_path('assets/admin/images/products/uploads/' . $images->image)) 
-        //         ? filesize(public_path('assets/admin/images/products/uploads/' . $images->image)) 
-        //         : 0, 
-        //     ];
-        // });
+        
+        $data['existingImages'] = ProductImage::where('product_id', $id)->where('status', '1')->get();
+                                
+       
         return view('admin.products.edit_products', $data);
     }
 
@@ -240,6 +236,7 @@ class ProductController extends Controller
                 'image' => $fileName,
                 'is_primary' => '0',
                 'sort_order' => $maxShortOrder + 1,
+                'status' => '1'
                ]);
 
             }
@@ -252,5 +249,35 @@ class ProductController extends Controller
             'redirect_url' => route('products')
         ], 200);
     } 
+
+    public function deleteImage($id)
+    {
+        $productImage = ProductImage::find($id);
+        if(!$productImage)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'Product Image Not Found'
+            ]); 
+        }
+
+        $path = public_path('assets/admin/images/products/uploads/'. $productImage->image);
+        if(\File::exists($path))
+        {
+            \File::delete($path);
+        }
+        
+
+        $productImage->update([
+            'status' => '0'
+        ]);
+    
+
+        return response()->json([
+            'status' => true,
+            'message'  => 'Product Image Deleted Successfully',
+            'product image id' => $productImage->id,
+        ]);
+    }
 
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('image');
             $table->boolean('is_primary')->default(false);
             $table->integer('sort_order')->nullable();
+            $table->string('status')->default('1');
             $table->softDeletes();
             $table->timestamps();
         });

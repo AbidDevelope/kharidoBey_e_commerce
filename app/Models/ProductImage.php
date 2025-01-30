@@ -17,6 +17,7 @@ class ProductImage extends Model
         'image',
         'is_primary',
         'sort_order',
+        'status',
     ];
     
     public function product()

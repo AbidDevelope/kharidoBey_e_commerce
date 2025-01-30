@@ -92,6 +92,7 @@ Route::middleware(['IsAdmin'])->group(function () {
         Route::get('products/view/{id}', 'viewProducts')->name('products.view');
         Route::get('products/edit/{id}', 'editProducts')->name('products.edit');  
         Route::put('update/products/{id}', 'updateProducts')->name('update.products');
+        Route::get('delete/image/{id}', 'deleteImage')->name('delete.image');
     });
 });
 
