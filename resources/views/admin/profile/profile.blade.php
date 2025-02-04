@@ -88,6 +88,7 @@
                                     </ul>
                                 </div>
                             </div>
+                            
                             <!-- Modal 2 -->
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -101,7 +102,7 @@
                                         <div class="modal-body">
                                             <!-- Row start -->
                                             <form action="{{ route('admin.profile.update') }}" id="editProfileForm" method="POST">
-                                                @csrf
+                                                @csrf 
                                                 <div class="row">
                                                     <div class="col-xl-6 col-sm-6 col-12">
                                                         <div class="mb-3">
@@ -109,7 +110,7 @@
                                                             <input type="text" class="form-control" id="name"
                                                                 name="name" value="{{ $admin->name }}"
                                                                 placeholder="Enter Name" oninput="validateInput('name')">
-                                                            <span class="text-danger" id="error-message-name">
+                                                               <span class="text-danger" id="error-message-name">
                                                                 @error('name')
                                                                     {{ $message }}
                                                                 @enderror
@@ -242,5 +243,7 @@
         });
     </script>
 
-    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
-@endsection
+     <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
+
+ @endsection

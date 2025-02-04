@@ -157,19 +157,5 @@
         });
     </script>
     
-
-    <!-- ************ Required JavaScript Files *************
-  ************* -->
-    <!-- Required jQuery first, then Bootstrap Bundle JS -->
     <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
-
-    <!-- *************
-   ************ Vendor Js Files *************
-  ************* -->
-
-    <!-- Main Js Required -->
-    <script src="{{ asset('assets/admin/js/main.js') }}"></script>
 @endsection
