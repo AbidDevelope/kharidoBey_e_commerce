@@ -83,10 +83,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
-                        <a href="{{ route('admin.profile') }}">Profile</a>
-                        <a href="#">Settings</a>
-                        <a href="{{ route('admin.change.password.form') }}">Change Password</a>
-                        <a href="{{ route('admin.logout') }}">Logout</a>
+                    <a href="{{ route('admin.profile') }}"><i class="bi bi-person-circle me-2"></i>Profile</a>
+                    <a href="#"><i class="bi bi-gear me-2"></i>Settings</a>
+                    <a href="{{ route('admin.change.password.form') }}"><i class="bi bi-lock me-2 "></i>Change Password</a>
+                    <a href="{{ route('admin.logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
                     </div>
                 </div>
             </li>
