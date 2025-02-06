@@ -245,5 +245,6 @@
 
      <!-- Required jQuery first, then Bootstrap Bundle JS -->
     <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
 
  @endsection
