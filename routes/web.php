@@ -36,7 +36,7 @@ Route::controller(ForgotPasswordController::class)->prefix('admin')->group(funct
     Route::post('forgot_password', 'submitForgotPasswordForm')->name('forgot.password.submit');
 });
 
-Route::middleware(['IsAdmin'])->group(function () {
+Route::middleware(['IsAdmin', 'breadCrumbs'])->group(function () {
     Route::controller(AuthController::class)->prefix('admin')->group(function () {
         Route::get('dashboard', 'dashboard')->name('dashboard');
         Route::get('profile', 'profile')->name('admin.profile');
