@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Admin;
 use Carbon\Carbon;
@@ -30,14 +31,13 @@ class ForgotPasswordController extends Controller
             return redirect()->back()->withErrors($validate)->withInput();
         }else{
             $email = $request->input('email');
-
-            $adminEmail = Admin::where('email', $email)->first();
-            if(!$adminEmail)
+            $existsAdmin = Admin::where('email', $email)->first();
+            if(!$existsAdmin)
             {
                 return redirect()->back()->withErrors($validate)->withInput();
             }else{
                 $token = Str::random(50);
-                // dd($token);
+
                 DB::table('password_reset_tokens')->insert([
                     'email' => $email,
                     'token' => $token,
@@ -62,8 +62,45 @@ class ForgotPasswordController extends Controller
         }
     }
 
-    public function showResetForm()
+    public function showResetForm(Request $request, $token = null)
     {
-        return view('admin.auth.reset-form');
+        return view('admin.auth.reset-form')->with(['token' => $token, 'email' => $request->email]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+       $validate = Validator::make($request->all(), [
+        'email' => 'required|email|exists:admins,email',
+        'password' => 'min:8',
+        'password_confirmation' => 'required_with:password|same:password|min:8'
+        ]);
+
+        if($validate->fails())
+        {
+            return redirect()->back()->withErrors($validate)->withInput();
+        }
+
+        $check_token = DB::table('password_reset_tokens')->where([
+            'email' => $request->email,
+            'token' => $request->token
+        ])->first();
+
+        if(!$check_token)
+        {
+            flash()->error('invalid token');
+            return redirect()->back();
+        }else{
+            Admin::where('email', $request->email)->update([
+                'password' => Hash::make($request->password),
+                'email_verified_at' => now()
+            ]);
+
+            DB::table('password_reset_tokens')->where([
+                'email' => $request->email
+            ])->delete(); 
+
+            flash()->success('Your password has been change! You can login.');
+            return redirect()->route('admin.login.get');
+        }
     }
 }

@@ -1,43 +1,58 @@
 @include('admin.includes.link')
+
 <body class="login-container">
     <!-- Login box start -->
-    <form action="{{ route('forgot.password.submit') }}" method="POST">
-        @csrf
-        <div class="login-box">
-            <div class="login-form">
-                <a href="#" class="login-logo">
-                    <img src="{{ asset('assets/admin/images/icon/kharidoBey.png') }}" alt="Admin Logo" />
-                </a>
-                <div class="login-welcome">
-                   Enter your email address and we will send you a link to reset your password.  
+    <form action="{{ route('reset.password') }}" method="POST">
+    @csrf
+    <div class="login-box">
+        <div class="login-form">
+            <a href="#" class="login-logo">
+                <img src="{{ asset('assets/admin/images/icon/kharidoBey.png') }}" alt="Admin Logo" />
+            </a>
+            <div class="login-welcome">
+                Now, You can enter the password and confirm password.
+            </div>
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="mb-2">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Enter your email" >
-                    @if($errors->has('email'))
-                       <span class="text-danger">{{ $errors->first('email') }}</span>
-                    @endif
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Password</label>
-                    <input type="text" name="password" value="{{ old('password') }}" class="form-control" placeholder="Enter your password" >
-                    @if($errors->has('password'))
-                       <span class="text-danger">{{ $errors->first('password') }}</span>
-                    @endif
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Confirm Password</label>
-                    <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="Enter your password" >
-                    @if($errors->has('password'))
-                       <span class="text-danger">{{ $errors->first('password') }}</span>
-                    @endif
-                </div>
-                <div class="login-form-actions">
-                    <button type="submit" class="btn"> <span class="icon"> <i class="bi bi-arrow-right-circle"></i> </span>
-                        Submit</button>
-                </div>
+            @endif
+
+            <div class="mb-2">
+                <label class="form-label">Email</label>
+                <input type="hidden" name="token" value="{{ $token }}" class="form-control">
+                <input type="email" readonly name="email" value="{{ $email ?? old('email') }}" class="form-control">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter your password">
+                @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="password_confirmation" class="form-control" placeholder="Enter your password">
+                @error('password_confirmation')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="login-form-actions">
+                <button type="submit" class="btn">
+                    <span class="icon"><i class="bi bi-arrow-right-circle"></i></span> Submit
+                </button>
             </div>
         </div>
-    </form>
+    </div>
+</form>
+
     <!-- Login box end -->
 </body>
