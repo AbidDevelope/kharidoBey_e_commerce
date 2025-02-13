@@ -34,7 +34,8 @@ Route::controller(AuthController::class)->prefix('admin')->group(function () {
 Route::controller(ForgotPasswordController::class)->prefix('admin')->group(function () {
     Route::get('forgot_password', 'showLinkRequestForm')->name('forgot.password');
     Route::post('forgot_password', 'sendResetLinkEmail')->name('forgot.password.submit');
-    Route::get('forgot_password/{token}', 'showResetForm')->name('show.reset.form');
+    Route::get('reset/password/{token}', 'showResetForm')->name('show.reset.form');
+    Route::post('reset/password', 'resetPassword')->name('reset.password');
 });
 
 Route::middleware(['IsAdmin', 'breadCrumbs'])->group(function () {
