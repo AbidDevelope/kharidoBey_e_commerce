@@ -29,6 +29,9 @@
                 <div class="mb-3">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email" value="{{ session('email', old('email')) }}">
+                    @error('email')
+                     <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
@@ -36,6 +39,9 @@
                         <a href="{{ route('forgot.password') }}" class="btn-link ml-auto">Forgot password?</a>
                     </div>
                     <input type="password" name="password" id="password" class="form-control">
+                    @error('password')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="login-form-actions">
                     <button type="submit" class="btn"> <span class="icon"> <i
