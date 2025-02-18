@@ -23,10 +23,14 @@ Route::view('page-not-found/404', 'errors.404');
 
 // ==================== Admin Route ======================= //
 // ==================== =========== ======================= //
-
+// Route::get('/auth/google-callback', [AuthController::class, 'handleGoogleCallback']);
 Route::controller(AuthController::class)->prefix('admin')->group(function () {
     Route::get('login', 'login')->name('admin.login.get');
     Route::post('login', 'AdminLogin')->name('login.post');
+
+    Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('/auth/google/callback', 'handleGoogleCallback')->name('admin.auth.google.callback');
+
     Route::get('register', 'Register')->name('admin.register.get');
     Route::post('register', 'AdminRegister')->name('admin.register.post');
 });

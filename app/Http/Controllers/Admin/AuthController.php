@@ -4,9 +4,12 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use Exception;
 use App\Http\Requests\AdminRegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
 
@@ -64,6 +67,47 @@ class AuthController extends Controller
                     return redirect()->back();
                 }
             }
+        }
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback(Request $request)
+    {
+        try{
+            $googleUser = Socialite::driver('google')->user();
+            $admin = Admin::where('google_id', $googleUser->id)->first();
+
+            if($admin)
+            {
+                Auth::guard('admin')->login($admin);
+                $request->session()->put('id', $googleUser->id);
+                flash()->success('Google Login Successfully');
+                return redirect()->route('dashboard');
+            }else{
+                $newAdmin = Admin::create([
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'mobile' => null,
+                    'password' => Hash::make('12456dummy'),
+                    'google_id' => $googleUser->id
+                ]);
+
+                if($newAdmin)
+                {
+                    Auth::guard('admin')->login($newAdmin);
+                    $request->session()->put('id', $googleUser->id);
+                    flash()->success('You Have Successfully Login');
+                    return redirect()->route('dashboard');
+                }
+            }
+          
+        }catch(Exception $e){
+            Log::error('Google Login Error' . $e->getMessage());
+            return redirect()->route('admin.login.get')->with('error', 'Something went wrong!. Try again');
         }
     }
 

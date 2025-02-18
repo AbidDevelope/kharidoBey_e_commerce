@@ -49,9 +49,9 @@
                         Login</button>
                 </div>
                 <div class="login-form-actions">
-                    <button type="button" class="btn"> <img src="{{ asset('assets/admin/images/google.svg') }}"
+                    <a href="{{ route('auth.google') }}" class="btn"> <img src="{{ asset('assets/admin/images/google.svg') }}"
                             class="login-icon" alt="Login with Google">
-                        Login with Google</button>
+                        Login with Google</a>
                     <button type="button" class="btn"> <img src="{{ asset('assets/admin/images/facebook.svg') }}"
                             class="login-icon" alt="Login with Facebook">
                         Login with Facebook</button>
@@ -89,7 +89,7 @@
         });
     </script>
 
-    <!-- *************
+        <!-- *************
    ************ Required JavaScript Files *************
   ************* -->
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
