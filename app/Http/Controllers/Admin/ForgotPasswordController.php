@@ -38,12 +38,23 @@ class ForgotPasswordController extends Controller
             }else{
                 $token = Str::random(50);
 
-                DB::table('password_reset_tokens')->insert([
-                    'email' => $email,
-                    'token' => $token,
-                    'created_at' => Carbon::now(),
-                ]);
+                $existsToken = DB::table('password_reset_tokens')->where('email', $email)->first();
 
+                if($existsToken)
+                {
+                   DB::table('password_reset_tokens')->where('email', $email)->update([
+                    'token' => $token,
+                    'created_at' => Carbon::now(), 
+                   ]);
+                }else{
+                    DB::table('password_reset_tokens')->insert([
+                        'email' => $email,
+                        'token' => $token,
+                        'created_at' => Carbon::now(),
+                    ]);
+                }
+
+             
                 $action_link = route('show.reset.form', ['token' => $token, 'email' => $request->email]);
                 $body = "We received a request to reset the password on your account " . $request->email . " Click the button below so it will redirects to the password reset page.";
                 Mail::send('admin.auth.forgot-password-link', ['action_link'=>$action_link, 'body'=> $body], function($message) use ($request){
