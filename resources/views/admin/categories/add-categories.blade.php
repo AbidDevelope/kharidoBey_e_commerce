@@ -21,7 +21,9 @@
                                             <label class="form-label">Name<span class="text-red">*</span></label>
                                             <input type="text" name="name" id="name" class="form-control"
                                                 placeholder="Enter Category Name">
-
+                                            @error('name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-12">
@@ -29,7 +31,9 @@
                                             <label class="form-label">Slug<span class="text-red">*</span></label>
                                             <input type="text" class="form-control" name="slug" id="slug"
                                                 placeholder="Enter Category Slug" readonly>
-
+                                            @error('slug')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-12">
@@ -54,6 +58,9 @@
                             <div class="card-border-title">Category Images</div>
                             <div class="card-border-body">
                                 <input type="file" class="form-control" onchange="readURL(this)" name="image">
+                                @error('image')
+                                  <span class="text-danger">{{ $message }}</span>
+                                @enderror
                                 <div class="mt-3">
                                     <img src="" id="preview_img" width="150px">
                                 </div>
