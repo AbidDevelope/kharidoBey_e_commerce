@@ -68,6 +68,11 @@ class CategoryController extends Controller
             'status' => 'required|in:0,1'
         ]);
 
+        if($validate->fails())
+        {
+            return redirect()->back()->withErrors($validate)->withInput();
+        }
+
         if ($validate->passes()) {
             $category = Category::withTrashed()->where('slug', $request->slug)->first();
             if ($category && $category->trashed()) {
