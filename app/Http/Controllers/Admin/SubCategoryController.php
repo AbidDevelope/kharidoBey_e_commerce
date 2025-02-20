@@ -68,10 +68,7 @@ class SubCategoryController extends Controller
           $validate = Validator::make($request->all(), [
               'category_id' => 'required',
               'name' => 'required',
-              'slug' => [
-                  'required',
-                  Rule::unique('sub_categories')->whereNull('deleted_at')
-              ],
+              'slug' => 'required',
               'status' => 'required|in:0,1'
           ]);
       }
