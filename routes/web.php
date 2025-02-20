@@ -7,18 +7,20 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-// User Route 
-Route::get('/', function () {
-    return view('user.index');
-});
-
+// Error page
 Route::fallback(function(){
     return redirect('page-not-found/404');
 });
 Route::view('page-not-found/404', 'errors.404');
+
+// ================= User Route ======================== // 
+Route::controller(HomeController::class)->group(function(){
+    Route::get('index', 'index')->name('user.index');
+});
 
 
 // ==================== Admin Route ======================= //
