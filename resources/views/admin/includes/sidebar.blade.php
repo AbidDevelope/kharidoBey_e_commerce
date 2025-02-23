@@ -36,10 +36,20 @@
                     </div>
                 </li>
                 <li class="sidebar-dropdown">
-                    <a href="{{ route('brands') }}">
+                    <a href="#">
                         <i class="bi bi-collection"></i>
                         <span class="menu-text">Brands</span>
                     </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{ route('brands/add') }}">Add Brand</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('brands') }}">Brands</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="sidebar-dropdown">
