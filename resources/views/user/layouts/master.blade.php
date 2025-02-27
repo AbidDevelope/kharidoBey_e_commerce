@@ -9,7 +9,7 @@
 <body>
     <!-- Header -->
     <header>
-        @include('user.includes.header');
+        @include('user.includes.header')
     </header>
 
     <!-- Main Body -->

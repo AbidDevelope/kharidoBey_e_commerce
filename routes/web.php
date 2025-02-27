@@ -103,7 +103,7 @@ Route::middleware(['IsAdmin', 'breadCrumbs'])->group(function () {
 
         Route::get('delete/image/{id}', 'deleteImage')->name('delete.image');
 
-        Route::get('products/delete/{id}', 'deleteProducts')->name('products.delete');
+        Route::get('products/delete/{id}', 'deleteProducts')->name('products.delete'); 
 
     });
 });
