@@ -196,11 +196,13 @@
                             <li><a href="{{ route('user.index') }}">Home</a></li>
                             @foreach($categories as $list)
                             <li><a href="#">{{ $list->name }} <span class="caret"></span></a>
+                               @if($list->subCategories->count() > 0)
                                 <ul class="dropdown-menu list-box-in">
                                     @foreach($list->subCategories as $subcategories)
                                     <li><a href="#">{{ $subcategories->name }}</a></li>
                                     @endforeach
                                 </ul>
+                               @endif
                             </li>
                             @endforeach
                         </ul>
