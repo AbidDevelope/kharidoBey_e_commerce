@@ -1,41 +1,22 @@
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- theme meta -->
+  <meta name="theme-name" content="mono" />
 
-    <!-- Meta -->
-    <meta name="description" content="Melon - Responsive Bootstrap 5 Dashboard Template">
-    <meta name="author" content="Bootstrap Gallery" />
-    <link rel="canonical" href="https://www.kharidoBey.com/">
-    <meta property="og:url" content="https://www.kharidoBey.com">
-    <meta property="og:title" content="Admin Templates - Dashboard Templates | KharidoBey Gallery">
-    <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
-    <meta property="og:type" content="Website">
-    <meta property="og:site_name" content="KharidoBey Gallery">
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+  <link href="{{ asset('assets/admin/plugins/material/css/materialdesignicons.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/admin/plugins/simplebar/simplebar.css') }}" rel="stylesheet" />
 
-    <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.svg') }}">
-    <!-- Animated css -->
-    <link rel="stylesheet" href="{{ asset('assets/admin/css/animate.css') }}">
-    <!-- Bootstrap font icons css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/admin/fonts/bootstrap/bootstrap-icons.css') }}">
-    <!-- Main css -->
-    <link rel="stylesheet" href="{{ asset('assets/admin/css/main.min.css') }}">
-    <!-- Scrollbar CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/overlay-scroll/OverlayScrollbars.min.css') }}">
-    <!-- tagsCloud Keywords CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/tagsCloud/tagsCloud.css') }}" />
+  <!-- PLUGINS CSS STYLE -->
+  <link href="{{ asset('assets/admin/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
+  {{-- <link href="{{ asset('assets/admin/plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css') }}" rel="stylesheet" /> --}}
+  <link href="{{ asset('assets/admin/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/admin/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link href="{{ asset('assets/admin/plugins/toaster/toastr.min.css') }}" rel="stylesheet" />
+  <!-- MONO CSS -->
+  <link id="main-css-href" rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}" />
 
-    
+  <!-- FAVICON -->
+  <link href="{{ asset('assets/admin/images/favicon.png') }}" rel="shortcut icon" />
 
-    <!-- Required jQuery first, then Bootstrap Bundle JS -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-   
-    
-
-    <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/dropzone/dropzone.min.js') }}"></script> 
-    <script src="{{ asset('assets/admin/js/main.js') }}"></script>
-
-</head>
+  <script src="{{ asset('assets/admin/plugins/nprogress/nprogress.js') }}"></script>

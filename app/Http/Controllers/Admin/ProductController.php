@@ -69,8 +69,8 @@ class ProductController extends Controller
 
 
     public function productAdd()
-    {
-        $brands = Brand::orderBy('name')->get();
+    {  
+        $brands = Brand::orderBy('name')->get();     
         $categories = Category::orderBy('name')->get();
 
         return view('admin.products.add_product', compact('brands', 'categories'));
@@ -310,5 +310,4 @@ class ProductController extends Controller
        }
 
     }
-
 }

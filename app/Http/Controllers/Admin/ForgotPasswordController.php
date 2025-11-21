@@ -60,7 +60,7 @@ class ForgotPasswordController extends Controller
                 Mail::send('admin.auth.forgot-password-link', ['action_link'=>$action_link, 'body'=> $body], function($message) use ($request){
                     $message->from('abidmohd763@gmail', 'forgot password');
                     $message->to($request->email, 'Your name')->subject('Reset Password')
-                    ->attach(public_path('assets/admin/images/icon/kharidoBey.png'), [
+                    ->attach(public_path('assets/admin/images/logo/kharidoBey.png'), [
                         'as' => 'logo.png',
                         'mime' => 'image/png'
                     ]);

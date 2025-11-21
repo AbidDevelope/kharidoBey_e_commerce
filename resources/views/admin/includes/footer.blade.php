@@ -1,5 +1,13 @@
-<!-- App Footer start -->
-<div class="app-footer">
-    <span>© KharidoBey admin 2024</span>
-</div>
-<!-- App footer end -->
+    <footer class="footer mt-auto">
+        <div class="copyright bg-white">
+            <p>
+                &copy; <span id="copy-year"></span> Copyright KharidoBey Dashboard by <a
+                    class="text-primary" href="#" target="_blank">Abid</a>.
+            </p>
+        </div>
+        <script>
+        var d = new Date();
+        var year = d.getFullYear();
+        document.getElementById("copy-year").innerHTML = year;
+        </script>
+    </footer>

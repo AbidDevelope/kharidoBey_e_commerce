@@ -45,6 +45,8 @@
 <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+ <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <!-- Content wrapper scroll end -->
 <script>
 $(document).ready(function() {

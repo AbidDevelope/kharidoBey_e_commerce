@@ -24,6 +24,9 @@ Route::controller(HomeController::class)->group(function(){
 
 
 // ==================== Admin Route ======================= //
+Route::get('/', function(){
+    return redirect('admin/login');
+});
 // ==================== =========== ======================= //
 // Route::get('/auth/google-callback', [AuthController::class, 'handleGoogleCallback']);
 Route::controller(AuthController::class)->prefix('admin')->group(function () {
@@ -56,7 +59,7 @@ Route::middleware(['IsAdmin', 'breadCrumbs'])->group(function () {
 
     Route::controller(CategoryController::class)->prefix('admin')->group(function () {
         Route::get('categories', 'categories')->name('categories');
-        Route::get('category/add', 'CategoryForm')->name('category');
+        Route::get('category/add', 'CategoryForm')->name('categories.add');
         Route::post('category/add', 'submitCategory')->name('category.submit');
         Route::get('categories/edit/{id}', 'categoryEdit')->name('categories/edit');
         Route::put('categories/update/{id}', 'categoryUpdate')->name('categories/update');
@@ -102,9 +105,8 @@ Route::middleware(['IsAdmin', 'breadCrumbs'])->group(function () {
         Route::put('update/products/{id}', 'updateProducts')->name('update.products');
 
         Route::get('delete/image/{id}', 'deleteImage')->name('delete.image');
-
+ 
         Route::get('products/delete/{id}', 'deleteProducts')->name('products.delete'); 
-
     });
 });
 
