@@ -1,108 +1,91 @@
-@include('admin.includes.link')
 
-<body class="login-container">
+<!DOCTYPE html>
 
-    <!-- Loading wrapper start -->
-    <!-- <div id="loading-wrapper">
-   <div class="spinner">
-                <div class="line1"></div>
-    <div class="line2"></div>
-    <div class="line3"></div>
-    <div class="line4"></div>
-    <div class="line5"></div>
-    <div class="line6"></div>
-            </div>
-  </div> -->
-    <!-- Loading wrapper end -->
+<html lang="en">
+<head>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Login box start -->
-    <form action="{{ route('login.post') }}" method="POST">
-        @csrf
-        <div class="login-box">
-            <div class="login-form">
-                <a href="#" class="login-logo">
-                    <img src="{{ asset('assets/admin/images/icon/kharidoBey.png') }}" alt="Vico Admin" />
-                </a>
-                <div class="login-welcome">
-                    Welcome back, <br />Please login to your admin account.
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" value="{{ session('email', old('email')) }}">
-                    @error('email')
-                     <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <label class="form-label">Password</label>
-                        <a href="{{ route('forgot.password') }}" class="btn-link ml-auto">Forgot password?</a>
-                    </div>
-                    <input type="password" name="password" id="password" class="form-control">
-                    @error('password')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="login-form-actions">
-                    <button type="submit" class="btn"> <span class="icon"> <i
-                                class="bi bi-arrow-right-circle"></i> </span>
-                        Login</button>
-                </div>
-                <div class="login-form-actions">
-                    <a href="{{ route('auth.google') }}" class="btn"> <img src="{{ asset('assets/admin/images/google.svg') }}"
-                            class="login-icon" alt="Login with Google">
-                        Login with Google</a>
-                    <button type="button" class="btn"> <img src="{{ asset('assets/admin/images/facebook.svg') }}"
-                            class="login-icon" alt="Login with Facebook">
-                        Login with Facebook</button>
-                </div>
-                <div class="login-form-footer">
-                    <div class="additional-link">
-                        Don't have an account? <a href="{{ route('admin.register.get') }}"> Signup</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <!-- Login box end -->
+  <title>Admin || Login</title>
+
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+  <link href="{{ asset('assets/admin/plugins/material/css/materialdesignicons.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/admin/plugins/simplebar/simplebar.css') }}" rel="stylesheet" />
+
+  <!-- PLUGINS CSS STYLE -->
+  <link href="{{ asset('assets/admin/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
+  
+  <!-- MONO CSS -->
+  <link id="main-css-href" rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}" />
 
   
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            var inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(function(input){
-               var errorSpan = document.getElementById(input.name + "-error");
 
-               if(errorSpan && errorSpan.textContent.trim() !== '') {
-                  errorSpan.style.display = 'inline';
-               }
+  <!-- FAVICON -->
+  <link href="{{ asset('assets/admin/images/favicon.png') }}" rel="shortcut icon" />
 
-               input.addEventListener('input', function() {
-                if(input.value.trim() === '') {
-                    errorSpan.style.display = 'inline'; 
-                }else { 
-                    errorSpan.style.display = 'none';
-                }
-               });
-            });
-        });
-    </script>
+  <script src="{{ asset('assets/admin/plugins/nprogress/nprogress.js') }}"></script>
+</head>
 
-        <!-- *************
-   ************ Required JavaScript Files *************
-  ************* -->
-    <!-- Required jQuery first, then Bootstrap Bundle JS -->
-    <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/modernizr.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/moment.js') }}"></script>
+</head>
+  <body class="bg-light-gray" id="body">
+          <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+          <div class="d-flex flex-column justify-content-between">
+            <div class="row justify-content-center">
+              <div class="col-lg-6 col-md-10">
+                <div class="card card-default mb-0">
+                  <div class="card-header pb-0">
+                    <div class="app-brand w-100 d-flex justify-content-center border-bottom-0">
+                      <a class="w-auto pl-0" href="#">
+                        <img src="{{ asset('assets/admin/images/logo/kharidoBey.png') }}" alt="Mono">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body px-5 pb-5 pt-0">
 
-    <!-- *************
-   ************ Vendor Js Files *************
-  ************* -->
+                    <h4 class="text-dark mb-6 text-center">Sign in for Admin</h4>
 
-    <!-- Main Js Required -->
-    <script src="{{ asset('assets/admin/js/main.js') }}"></script>
+                    <form action="{{ route('login.post') }}" method="POST">
+                        @csrf
+                      <div class="row">
+                        <div class="form-group col-md-12 mb-4">
+                          <input type="email" class="form-control input-lg" value="{{ old('email') }}" id="email" name="email" aria-describedby="emailHelp"
+                            placeholder="email">
+                        </div>
+                        <div class="form-group col-md-12 ">
+                          <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Password">
+                        </div>
+                        <div class="col-md-12">
+
+                          <div class="d-flex justify-content-between mb-3">
+
+                            <div class="custom-control custom-checkbox mr-3 mb-3">
+                              <input type="checkbox" class="custom-control-input" id="customCheck2">
+                              <label class="custom-control-label" for="customCheck2">Remember me</label>
+                            </div>
+
+                            <a class="text-color" href="{{ route('forgot.password') }}"> Forgot password? </a>
+
+                          </div>
+
+                          <button type="submit" class="btn btn-primary btn-pill mb-4">Sign In</button>
+
+                          {{-- <p>Don't have an account yet ?
+                            <a class="text-blue" href="{{ route('admin.register.get') }}">Sign Up</a>
+                          </p> --}}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 </body>
+</html>
+
